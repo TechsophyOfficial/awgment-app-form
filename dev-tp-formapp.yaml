@@ -1,0 +1,41 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: form-app
+  namespace: dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: form-app
+  template:
+    metadata:
+      labels:
+        name: form-app
+    spec:
+      containers:
+      - image: tsdevopsteam/platform:form-app-$BUILD_NUMBER
+        name: form-app
+        envFrom:
+        - configMapRef:
+            name: form-app
+        ports:
+        - containerPort: 8080
+      imagePullSecrets:
+      - name: ts-platform
+        
+      
+      
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: form-app
+  namespace: dev
+spec:
+  type: ClusterIP
+  ports: 
+  - port: 8080
+  selector:
+    name: form-app

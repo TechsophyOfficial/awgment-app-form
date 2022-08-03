@@ -1,0 +1,620 @@
+openapi: 3.0.0
+info:
+  title: Form Modeler API Spec
+  contact: {}
+  version: '1.0'
+  description: Form Modeler API Spec
+servers:
+  variables: {}
+paths:
+  /api/form-modeler/v1/forms:
+    post:
+      tags:
+        - Designtime Form
+      summary: Save form
+      operationId: saveForm
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              properties:
+                id:
+                  type: integer
+                  description: Name of the form
+                  format: int64
+                name:
+                  type: string
+                  description: Unique id of the form
+                  format: int64
+                components:
+                  type: object
+                  description: Components of the form (Formio)
+                version:
+                  type: string
+                  description: Version of the form
+              required:
+                - id
+                - name
+                - components
+                - version
+            example:
+              formName: audit-test-name
+              formKey: audit-test-key
+              components:
+                display: form
+                components:
+                  - label: Upload
+                    labelPosition: top
+                    description: ''
+                    tooltip: ''
+                    customClass: ''
+                    tabindex: ''
+                    hidden: false
+                    hideLabel: false
+                    autofocus: false
+                    disabled: false
+                    tableView: false
+                    modalEdit: false
+                    storage: url
+                    documentType: Test1
+                    url: ''
+                    options: ''
+                    fileKey: ''
+                    dir: ''
+                    fileNameTemplate: ''
+                    image: false
+                    uploadOnly: false
+                    privateDownload: false
+                    webcam: false
+                    fileTypes:
+                      - label: ''
+                        value: ''
+                    filePattern: '*'
+                    fileMinSize: 0KB
+                    fileMaxSize: 1GB
+                    multiple: false
+                    persistent: true
+                    protected: false
+                    dbIndex: false
+                    encrypted: false
+                    redrawOn: ''
+                    clearOnHide: true
+                    customDefaultValue: ''
+                    calculateValue: ''
+                    calculateServer: false
+                    allowCalculateOverride: false
+                    validate:
+                      required: false
+                      customMessage: ''
+                      custom: ''
+                      customPrivate: false
+                      json: ''
+                      strictDateValidation: false
+                      multiple: false
+                      unique: false
+                    errorLabel: ''
+                    key: file
+                    tags: []
+                    properties: {}
+                    conditional:
+                      show: ''
+                      when: ''
+                      eq: ''
+                      json: ''
+                    customConditional: ''
+                    logic: []
+                    attributes: {}
+                    overlay:
+                      style: ''
+                      page: ''
+                      left: ''
+                      top: ''
+                      width: ''
+                      height: ''
+                    type: file
+                    imageSize: '200'
+                    input: true
+                    disableOnInvalid: false
+                    placeholder: ''
+                    prefix: ''
+                    suffix: ''
+                    defaultValue: ''
+                    unique: false
+                    refreshOn: ''
+                    widget: ''
+                    validateOn: change
+                    showCharCount: false
+                    showWordCount: false
+                    allowMultipleMasks: false
+                    id: edhku7o
+                  - label: Submit
+                    placeholder: ''
+                    description: ''
+                    disabled: false
+                    validateOn: change
+                    validate:
+                      required: false
+                      custom: ''
+                      customPrivate: false
+                      strictDateValidation: false
+                      multiple: false
+                      unique: false
+                    key: submit
+                    type: button
+                    input: true
+                    disableOnInvalid: true
+                    action: submit
+                    multiple: false
+                    prefix: ''
+                    customClass: ''
+                    suffix: ''
+                    defaultValue: ''
+                    protected: false
+                    unique: false
+                    persistent: false
+                    hidden: false
+                    clearOnHide: true
+                    refreshOn: ''
+                    redrawOn: ''
+                    tableView: false
+                    modalEdit: false
+                    labelPosition: top
+                    errorLabel: ''
+                    tooltip: ''
+                    hideLabel: false
+                    tabindex: ''
+                    autofocus: false
+                    dbIndex: false
+                    customDefaultValue: ''
+                    calculateValue: ''
+                    calculateServer: false
+                    widget:
+                      type: input
+                    attributes: {}
+                    conditional:
+                      show: ''
+                      when: ''
+                      eq: ''
+                    overlay:
+                      style: ''
+                      left: ''
+                      top: ''
+                      width: ''
+                      height: ''
+                    allowCalculateOverride: false
+                    encrypted: false
+                    showCharCount: false
+                    showWordCount: false
+                    properties: {}
+                    allowMultipleMasks: false
+                    size: md
+                    leftIcon: ''
+                    rightIcon: ''
+                    block: false
+                    theme: primary
+                    dataGridLabel: true
+                    id: e6gz1e
+              formVersion: 1
+              tenantId: ''
+            examples:
+              example-1:
+                value:
+                  id: 0
+                  name: string
+                  components: {}
+                  version: string
+        required: true
+      deprecated: false
+      servers:
+        - url: ''
+          variables: {}
+      description: Save form
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                    minLength: 1
+                required:
+                  - data
+                  - success
+                  - message
+              examples:
+                example-1:
+                  value:
+                    data: null
+                    success: true
+                    message: string
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - bearerAuth: []
+    get:
+      tags:
+        - Designtime Form
+      summary: Fetch all forms
+      operationId: getAllForms
+      parameters:
+        - name: include-form-content
+          in: query
+          description: Include form components or not (true/false)
+          style: form
+          explode: true
+          schema:
+            type: boolean
+            example: true
+        - schema:
+            type: string
+          in: query
+          name: q
+          description: Any search term
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  data:
+                    type: array
+                    uniqueItems: true
+                    minItems: 1
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          description: Name of the form
+                          format: int64
+                        name:
+                          type: string
+                          description: Unique id of the form
+                          format: int64
+                        components:
+                          type: object
+                          description: Components of the form
+                        version:
+                          type: string
+                          description: Version of the form
+                        createdById:
+                          type: integer
+                          format: int64
+                        createdOn:
+                          type: string
+                          format: date-time
+                        updatedById:
+                          type: integer
+                          format: int64
+                        updatedOn:
+                          type: string
+                          format: date-time
+                        createdByName:
+                          type: string
+                        updatedByName:
+                          type: string
+                      required:
+                        - id
+                        - name
+                        - version
+                  success:
+                    type: boolean
+                    description: true/false
+                  message:
+                    type: string
+                    description: Message returned from the api
+                required:
+                  - data
+              examples:
+                example-1:
+                  value:
+                    data:
+                      - id: 0
+                        name: string
+                        components: {}
+                        version: string
+                        createdById: 0
+                        createdOn: '2019-08-24T14:15:22Z'
+                        updatedById: 0
+                        updatedOn: '2019-08-24T14:15:22Z'
+                        createdByName: string
+                        updatedByName: string
+                    success: true
+                    message: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      deprecated: false
+      servers:
+        - url: 'http://localhost:8081/service/1.0.0'
+          variables: {}
+      description: Fetch all forms
+      security:
+        - bearerAuth: []
+    parameters: []
+  '/api/form-modeler/v1/forms/{id}':
+    get:
+      tags:
+        - Designtime Form
+      summary: Fetch form by form id
+      operationId: getFormByFormId
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  data:
+                    type: object
+                    required:
+                      - id
+                      - name
+                      - components
+                    properties:
+                      id:
+                        type: integer
+                        format: int64
+                      name:
+                        type: string
+                        format: int64
+                      components:
+                        type: object
+                      version:
+                        type: string
+                      createdById:
+                        type: integer
+                        format: int64
+                      createdOn:
+                        type: string
+                        format: date-time
+                      updatedById:
+                        type: integer
+                        format: int64
+                      updatedOn:
+                        type: string
+                        format: date-time
+                      createdByName:
+                        type: string
+                      updatedByName:
+                        type: string
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                    minLength: 1
+                required:
+                  - data
+                  - success
+                  - message
+              examples:
+                example-1:
+                  value:
+                    data:
+                      id: 0
+                      name: string
+                      components: {}
+                      version: string
+                      createdById: 0
+                      createdOn: '2019-08-24T14:15:22Z'
+                      updatedById: 0
+                      updatedOn: '2019-08-24T14:15:22Z'
+                      createdByName: string
+                      updatedByName: string
+                    success: true
+                    message: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      deprecated: false
+      servers:
+        - url: 'http://localhost:8081/service/1.0.0'
+          variables: {}
+      description: Fetch form by form id
+      security:
+        - bearerAuth: []
+    delete:
+      tags:
+        - Designtime Form
+      summary: Delete form by form id
+      operationId: deleteFormByFormId
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  data:
+                    type: 'null'
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                    minLength: 1
+                required:
+                  - success
+                  - message
+              examples:
+                example-1:
+                  value:
+                    data: null
+                    success: true
+                    message: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      deprecated: false
+      servers:
+        - url: 'http://localhost:8081/service/1.0.0'
+          variables: {}
+      security:
+        - bearerAuth: []
+      description: Delete form by form id
+    parameters:
+      - schema:
+          type: integer
+          format: int64
+        name: id
+        in: path
+        required: true
+        description: Fetch form by this id
+components:
+  schemas:
+    Error:
+      description: ''
+      type: object
+      properties:
+        error:
+          type: string
+          minLength: 1
+        message:
+          type: string
+          minLength: 1
+        timestamp:
+          type: string
+          minLength: 1
+        path:
+          type: string
+          minLength: 1
+        status:
+          type: number
+      required:
+        - error
+        - message
+        - timestamp
+        - path
+        - status
+      x-examples:
+        example-1:
+          error: string
+          message: string
+          timestamp: string
+          path: string
+          status: 0
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+security:
+  - bearerAuth: []
+tags:
+  - name: Designtime Form
+  - name: Runtime Form
+  - name: Designtime Process
+  - name: Designtime Rule
