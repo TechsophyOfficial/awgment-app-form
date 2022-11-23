@@ -88,7 +88,6 @@ public class FormServiceImpl implements FormService
         }
         formDefinition.setUpdatedOn(Instant.now());
         formDefinition.setUpdatedById(loggedInUserId);
-        formDefinition.setUpdatedByName(loggedInUserDetails.get(FIRST_NAME)+SPACE+loggedInUserDetails.get(LAST_NAME));
         FormDefinition formSave= this.formDefinitionRepository.save(formDefinition);
         FormAuditSchema formAuditSchema =this.objectMapper.convertValue(formDefinition,FormAuditSchema.class);
         formAuditSchema.setId(idGeneratorImpl.nextId().toString());
@@ -217,7 +216,6 @@ public class FormServiceImpl implements FormService
         }
         formDefinition.setCreatedOn(Instant.now());
         formDefinition.setCreatedById(loggedInUserId);
-        formDefinition.setCreatedByName(loggedInUserDetails.get(FIRST_NAME)+SPACE+loggedInUserDetails.get(LAST_NAME));
         return formDefinition;
     }
 
