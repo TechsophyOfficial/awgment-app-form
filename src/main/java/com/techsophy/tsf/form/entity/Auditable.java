@@ -17,7 +17,5 @@ public class Auditable
     private BigInteger updatedById;
     private Instant createdOn;
     private Instant updatedOn;
-    private String createdByName;
-    private String updatedByName;
 }
 
