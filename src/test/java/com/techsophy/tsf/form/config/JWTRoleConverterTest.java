@@ -33,7 +33,7 @@ import static org.mockito.Mockito.when;
 
 @ActiveProfiles(TEST_ACTIVE_PROFILE)
 @SpringBootTest
-public class JWTRoleConverterTest {
+class JWTRoleConverterTest {
     @Mock
     WebClientWrapper webClientWrapper;
     @Mock
