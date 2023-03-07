@@ -24,4 +24,5 @@ public class FormSchema
     String type;
     Integer version;
     Boolean isDefault;
+    Boolean pushToElastic;
 }

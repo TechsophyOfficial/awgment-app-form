@@ -80,7 +80,7 @@ class FormServiceExceptionTest
         map.put("create","true");
         list.add(map);
         when(mockUserDetails.getUserDetails()).thenReturn(userList);
-        FormSchema formSchemaTest =new FormSchema(ID_VALUE, NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES, TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE);
+        FormSchema formSchemaTest =new FormSchema(ID_VALUE, NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES, TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE,Boolean.TRUE);
         Assertions.assertThrows(UserDetailsIdNotFoundException.class,() -> mockFormServiceImpl.saveForm(formSchemaTest));
     }
 

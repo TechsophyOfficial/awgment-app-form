@@ -27,4 +27,5 @@ public class FormAuditSchema
     String type;
     Integer version;
     Boolean isDefault;
+    Boolean pushToElastic;
 }

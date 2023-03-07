@@ -87,7 +87,7 @@ class FormControllerTest
         ObjectMapper objectMapperTest=new ObjectMapper();
         FormSchema formSchemaTest=objectMapperTest.readValue(inputStreamTest,FormSchema.class);
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
-        FormSchema formSchema = new FormSchema(ID_VALUE,NAME,COMPONENTS,List.of(accessControlListDTO),PROPERTIES,"component", VERSION_VALUE, IS_DEFAULT_VALUE);
+        FormSchema formSchema = new FormSchema(ID_VALUE,NAME,COMPONENTS,List.of(accessControlListDTO),PROPERTIES,"component", VERSION_VALUE, IS_DEFAULT_VALUE,Boolean.TRUE);
         Mockito.when(mockTokenUtils.getIssuerFromToken(TOKEN)).thenReturn(TENANT);
         Mockito.when(mockFormService.saveForm(formSchemaTest)).thenReturn(new FormResponse(ID_VALUE, VERSION_VALUE));
         RequestBuilder requestBuilderTest = MockMvcRequestBuilders.post(BASE_URL + VERSION_V1 + FORMS_URL)
@@ -103,7 +103,7 @@ class FormControllerTest
     {
         ObjectMapper objectMapperTest=new ObjectMapper();
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
-        FormSchema formSchema = new FormSchema(ID_VALUE,NAME,COMPONENTS,List.of(accessControlListDTO),PROPERTIES,TYPE_FORM, VERSION_VALUE, IS_DEFAULT_VALUE);
+        FormSchema formSchema = new FormSchema(ID_VALUE,NAME,COMPONENTS,List.of(accessControlListDTO),PROPERTIES,TYPE_FORM, VERSION_VALUE, IS_DEFAULT_VALUE,Boolean.TRUE);
         Mockito.when(mockTokenUtils.getIssuerFromToken(TOKEN)).thenReturn(TENANT);
         Mockito.when(mockFormService.saveForm(formSchema)).thenReturn(new FormResponse(ID_VALUE, VERSION_VALUE));
         RequestBuilder requestBuilderTest = MockMvcRequestBuilders.post(BASE_URL + VERSION_V1 + FORMS_URL)

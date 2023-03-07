@@ -86,7 +86,7 @@ class FormAuditServiceImplTest
         @Cleanup InputStream inputStreamTest = new ClassPathResource(FORMS_DATA_2).getInputStream();
         String formData = new String(inputStreamTest.readAllBytes());
         FormAuditDefinition formDefinitionTest = objectMapperTest.readValue(formData,FormAuditDefinition.class);
-        FormAuditSchema formAuditSchema =new FormAuditSchema(ID_VALUE, ID_VALUE,NAME, COMPONENTS,list,PROPERTIES,TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE);
+        FormAuditSchema formAuditSchema =new FormAuditSchema(ID_VALUE, ID_VALUE,NAME, COMPONENTS,list,PROPERTIES,TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE,Boolean.TRUE);
         when(this.mockObjectMapper.convertValue(any(), eq(FormAuditDefinition.class))).thenReturn(formDefinitionTest);
         when(formDefinitionAuditRepository.save(any())).thenReturn(formDefinitionTest);
         when(this.mockObjectMapper.convertValue(any(), eq(FormResponse.class))).thenReturn(new FormResponse(ID_VALUE, VERSION_VALUE));
@@ -104,7 +104,7 @@ class FormAuditServiceImplTest
         @Cleanup InputStream inputStreamTest = new ClassPathResource(FORMS_DATA_2).getInputStream();
         String formData = new String(inputStreamTest.readAllBytes());
         FormAuditDefinition formDefinitionTest = objectMapperTest.readValue(formData,FormAuditDefinition.class);
-        FormAuditSchema formAuditSchema =new FormAuditSchema(ID_VALUE, ID_VALUE,NAME, COMPONENTS,list,PROPERTIES, TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE);
+        FormAuditSchema formAuditSchema =new FormAuditSchema(ID_VALUE, ID_VALUE,NAME, COMPONENTS,list,PROPERTIES, TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE,Boolean.TRUE);
         when(this.mockObjectMapper.convertValue(any(), eq(FormAuditSchema.class))).thenReturn(formAuditSchema);
         when(formDefinitionAuditRepository.findById(BigInteger.valueOf(Long.parseLong(ID_VALUE)),VERSION_VALUE)).thenReturn(Optional.ofNullable(formDefinitionTest));
         mockFormServiceImpl.getFormsById(ID_VALUE,VERSION_VALUE);

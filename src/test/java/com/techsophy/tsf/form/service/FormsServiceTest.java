@@ -89,8 +89,8 @@ class FormsServiceTest
         @Cleanup InputStream inputStreamTest = new ClassPathResource(FORMS_DATA_2).getInputStream();
         String formData = new String(inputStreamTest.readAllBytes());
         FormDefinition formDefinitionTest = objectMapperTest.readValue(formData,FormDefinition.class);
-        FormSchema formSchemaTest =new FormSchema(ID_VALUE, NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES, TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE);
-        FormAuditSchema formAuditSchema =new FormAuditSchema(ID_VALUE, ID_VALUE,NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES, TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE);
+        FormSchema formSchemaTest =new FormSchema(ID_VALUE, NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES, TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE,Boolean.TRUE);
+        FormAuditSchema formAuditSchema =new FormAuditSchema(ID_VALUE, ID_VALUE,NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES, TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE,Boolean.TRUE);
         when(mockObjectMapper.convertValue(any(), eq(FormAuditSchema.class))).thenReturn(formAuditSchema);
         when(mockIdGenerator.nextId()).thenReturn(BigInteger.valueOf(Long.parseLong(ID_VALUE)));
         Mockito.when(mockUserDetails.getUserDetails()).thenReturn(userList);
@@ -109,8 +109,8 @@ class FormsServiceTest
         @Cleanup InputStream inputStreamTest = new ClassPathResource(FORMS_DATA_2).getInputStream();
         String formData = new String(inputStreamTest.readAllBytes());
         FormDefinition formDefinitionTest = objectMapperTest.readValue(formData,FormDefinition.class);
-        FormSchema formSchemaTest =new FormSchema(null, NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES,TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE);
-        FormAuditSchema formAuditSchema =new FormAuditSchema(ID_VALUE, ID_VALUE,NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES, TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE);
+        FormSchema formSchemaTest =new FormSchema(null, NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES,TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE,Boolean.TRUE);
+        FormAuditSchema formAuditSchema =new FormAuditSchema(ID_VALUE, ID_VALUE,NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES, TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE,Boolean.TRUE);
         when(mockObjectMapper.convertValue(any(), eq(FormAuditSchema.class))).thenReturn(formAuditSchema);
         when(mockIdGenerator.nextId()).thenReturn(BigInteger.valueOf(Long.parseLong(ID_VALUE)));
         Mockito.when(mockUserDetails.getUserDetails())
@@ -131,8 +131,8 @@ class FormsServiceTest
         @Cleanup InputStream inputStreamTest = new ClassPathResource(FORMS_DATA_1).getInputStream();
         String formData = new String(inputStreamTest.readAllBytes());
         FormDefinition formDefinitionTest = objectMapperTest.readValue(formData,FormDefinition.class);
-        FormSchema formSchemaTest =new FormSchema(ID_VALUE, NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES, TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE);
-        FormAuditSchema formAuditSchema =new FormAuditSchema(ID_VALUE, ID_VALUE,NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES, TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE);
+        FormSchema formSchemaTest =new FormSchema(ID_VALUE, NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES, TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE,Boolean.TRUE);
+        FormAuditSchema formAuditSchema =new FormAuditSchema(ID_VALUE, ID_VALUE,NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES, TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE,Boolean.TRUE);
         when(mockObjectMapper.convertValue(any(), eq(FormAuditSchema.class))).thenReturn(formAuditSchema);
         when(mockIdGenerator.nextId()).thenReturn(BigInteger.valueOf(Long.parseLong(ID_VALUE)));
         Mockito.when(mockUserDetails.getUserDetails())
@@ -152,8 +152,8 @@ class FormsServiceTest
         ObjectMapper objectMapperTest = new ObjectMapper();
         @Cleanup InputStream inputStreamTest = new ClassPathResource(FORMS_DATA_1).getInputStream();
         String formData = new String(inputStreamTest.readAllBytes());
-        FormSchema formSchemaTest =new FormSchema(ID_VALUE, NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES, TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE);
-        FormAuditSchema formAuditSchema =new FormAuditSchema(ID_VALUE, ID_VALUE,NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES, TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE);
+        FormSchema formSchemaTest =new FormSchema(ID_VALUE, NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES, TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE,Boolean.TRUE);
+        FormAuditSchema formAuditSchema =new FormAuditSchema(ID_VALUE, ID_VALUE,NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES, TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE,Boolean.TRUE);
         when(mockObjectMapper.convertValue(any(), eq(FormAuditSchema.class))).thenReturn(formAuditSchema);
         when(mockIdGenerator.nextId()).thenReturn(BigInteger.valueOf(Long.parseLong(ID_VALUE)));
         FormDefinition formDefinitionTest = objectMapperTest.readValue(formData,FormDefinition.class);
@@ -249,7 +249,7 @@ class FormsServiceTest
         Map<String,Object> component = new HashMap<>();
         component.put("key","value");
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
-        FormDefinition formDefinition = new FormDefinition(BigInteger.valueOf(Long.parseLong(ID_VALUE)),NAME,VERSION_VALUE,component,List.of(accessControlListDTO),component,"component", IS_DEFAULT_VALUE);
+        FormDefinition formDefinition = new FormDefinition(BigInteger.valueOf(Long.parseLong(ID_VALUE)),NAME,VERSION_VALUE,component,List.of(accessControlListDTO),component,"component", IS_DEFAULT_VALUE,Boolean.TRUE);
         FormResponseSchema formSchemaTest =new FormResponseSchema(ID_VALUE, NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES, TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE,CREATED_BY_ID_VALUE,CREATED_ON_INSTANT, UPDATED_BY_ID_VALUE, UPDATED_ON_INSTANT);
         when(mockFormDefinitionRepository.existsById(BigInteger.valueOf(1))).thenReturn(true);
         when(mockFormDefinitionRepository.findById(BigInteger.valueOf(1))).thenReturn(Optional.of(formDefinition));
@@ -362,7 +362,7 @@ class FormsServiceTest
         ObjectMapper objectMapperTest = new ObjectMapper();
         @Cleanup InputStream inputStreamTest = new ClassPathResource(FORMS_DATA_1).getInputStream();
         String formData = new String(inputStreamTest.readAllBytes());
-        FormSchema formSchemaTest =new FormSchema(ID_VALUE,NAME,COMPONENTS,List.of(accessControlListDTO),PROPERTIES,TYPE_FORM,VERSION_VALUE,IS_DEFAULT_VALUE);
+        FormSchema formSchemaTest =new FormSchema(ID_VALUE,NAME,COMPONENTS,List.of(accessControlListDTO),PROPERTIES,TYPE_FORM,VERSION_VALUE,IS_DEFAULT_VALUE,Boolean.TRUE);
         FormDefinition formDefinitionTest = objectMapperTest.readValue(formData, FormDefinition.class);
         when(this.mockObjectMapper.convertValue(any(), eq(FormSchema.class))).thenReturn(formSchemaTest);
         when(mockFormDefinitionRepository.findAll()).thenReturn(List.of(formDefinitionTest));
@@ -377,7 +377,7 @@ class FormsServiceTest
         ObjectMapper objectMapperTest = new ObjectMapper();
         @Cleanup InputStream inputStreamTest = new ClassPathResource(FORMS_DATA_1).getInputStream();
         String formsData = new String(inputStreamTest.readAllBytes());
-        FormSchema formSchemaTest =new FormSchema(ID_VALUE,NAME,COMPONENTS,List.of(accessControlListDTO),PROPERTIES,TYPE_FORM,VERSION_VALUE,IS_DEFAULT_VALUE);
+        FormSchema formSchemaTest =new FormSchema(ID_VALUE,NAME,COMPONENTS,List.of(accessControlListDTO),PROPERTIES,TYPE_FORM,VERSION_VALUE,IS_DEFAULT_VALUE,Boolean.TRUE);
         FormDefinition formDefinitionTest = objectMapperTest.readValue(formsData, FormDefinition.class);
         when(this.mockObjectMapper.convertValue(any(), eq(FormSchema.class))).thenReturn(formSchemaTest);
         Page<FormDefinition> page =new PageImpl<>(List.of(formDefinitionTest)) ;
@@ -396,7 +396,7 @@ class FormsServiceTest
         ObjectMapper objectMapperTest = new ObjectMapper();
         @Cleanup InputStream inputStreamTest = new ClassPathResource(FORMS_DATA_1).getInputStream();
         String formsData = new String(inputStreamTest.readAllBytes());
-        FormSchema formSchemaTest =new FormSchema(ID_VALUE, NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES,TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE);
+        FormSchema formSchemaTest =new FormSchema(ID_VALUE, NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES,TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE,Boolean.TRUE);
         FormDefinition formDefinitionTest = objectMapperTest.readValue(formsData, FormDefinition.class);
         when(this.mockObjectMapper.convertValue(any(), eq(FormSchema.class))).thenReturn(formSchemaTest);
         Page<FormDefinition> page =new PageImpl<>(List.of(formDefinitionTest)) ;
@@ -415,7 +415,7 @@ class FormsServiceTest
         ObjectMapper objectMapperTest = new ObjectMapper();
         @Cleanup InputStream inputStreamTest = new ClassPathResource(FORMS_DATA_1).getInputStream();
         String formsData = new String(inputStreamTest.readAllBytes());
-        FormSchema formSchemaTest =new FormSchema(ID_VALUE, NAME,COMPONENTS,List.of(accessControlListDTO),PROPERTIES,TYPE_FORM,VERSION_VALUE,IS_DEFAULT_VALUE);
+        FormSchema formSchemaTest =new FormSchema(ID_VALUE, NAME,COMPONENTS,List.of(accessControlListDTO),PROPERTIES,TYPE_FORM,VERSION_VALUE,IS_DEFAULT_VALUE,Boolean.TRUE);
         FormDefinition formDefinitionTest = objectMapperTest.readValue(formsData, FormDefinition.class);
         when(this.mockObjectMapper.convertValue(any(), eq(FormSchema.class))).thenReturn(formSchemaTest);
         Page<FormDefinition> page =new PageImpl<>(List.of(formDefinitionTest)) ;
@@ -434,7 +434,7 @@ class FormsServiceTest
         ObjectMapper objectMapperTest = new ObjectMapper();
         @Cleanup InputStream inputStreamTest = new ClassPathResource(FORMS_DATA_1).getInputStream();
         String formsData = new String(inputStreamTest.readAllBytes());
-        FormSchema formSchemaTest =new FormSchema(ID_VALUE, NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES,TYPE_FORM,VERSION_VALUE,IS_DEFAULT_VALUE);
+        FormSchema formSchemaTest =new FormSchema(ID_VALUE, NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES,TYPE_FORM,VERSION_VALUE,IS_DEFAULT_VALUE,Boolean.TRUE);
         FormDefinition formDefinitionTest = objectMapperTest.readValue(formsData, FormDefinition.class);
         when(this.mockObjectMapper.convertValue(any(), eq(FormSchema.class))).thenReturn(formSchemaTest);
         Page<FormDefinition> page =new PageImpl<>(List.of(formDefinitionTest)) ;
@@ -453,7 +453,7 @@ class FormsServiceTest
         ObjectMapper objectMapperTest = new ObjectMapper();
         @Cleanup InputStream inputStreamTest = new ClassPathResource(FORMS_DATA_1).getInputStream();
         String formData = new String(inputStreamTest.readAllBytes());
-        FormSchema formSchemaTest =new FormSchema(ID_VALUE,NAME,COMPONENTS,List.of(accessControlListDTO),PROPERTIES,TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE);
+        FormSchema formSchemaTest =new FormSchema(ID_VALUE,NAME,COMPONENTS,List.of(accessControlListDTO),PROPERTIES,TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE,Boolean.TRUE);
         FormDefinition formDefinitionTest = objectMapperTest.readValue(formData, FormDefinition.class);
         when(this.mockObjectMapper.convertValue(any(), eq(FormSchema.class))).thenReturn(formSchemaTest);
         when(mockFormDefinitionRepository.findByTypeAndQSorting(TYPE_VALUE,Q,null)).thenReturn(List.of(formDefinitionTest));
@@ -468,7 +468,7 @@ class FormsServiceTest
         ObjectMapper objectMapperTest = new ObjectMapper();
         @Cleanup InputStream inputStreamTest = new ClassPathResource(FORMS_DATA_1).getInputStream();
         String formData = new String(inputStreamTest.readAllBytes());
-        FormSchema formSchemaTest =new FormSchema(ID_VALUE,NAME,COMPONENTS,List.of(accessControlListDTO),PROPERTIES,TYPE_FORM,VERSION_VALUE,IS_DEFAULT_VALUE);
+        FormSchema formSchemaTest =new FormSchema(ID_VALUE,NAME,COMPONENTS,List.of(accessControlListDTO),PROPERTIES,TYPE_FORM,VERSION_VALUE,IS_DEFAULT_VALUE,Boolean.TRUE);
         FormDefinition formDefinitionTest = objectMapperTest.readValue(formData, FormDefinition.class);
         when(this.mockObjectMapper.convertValue(any(), eq(FormSchema.class))).thenReturn(formSchemaTest);
         when(mockFormDefinitionRepository.findFormsByQSorting(Q, null)).thenReturn(Stream.of(formDefinitionTest));

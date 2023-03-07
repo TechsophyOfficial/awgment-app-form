@@ -77,7 +77,7 @@ class FormAuditServiceExceptionTest
     {
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
         when(mockUserDetails.getUserDetails()).thenReturn(userList);
-        FormAuditSchema formAuditSchema =new FormAuditSchema(ID_VALUE,FORM_ID_VALUE,NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES,TYPE_FORM,VERSION_VALUE,IS_DEFAULT_VALUE);
+        FormAuditSchema formAuditSchema =new FormAuditSchema(ID_VALUE,FORM_ID_VALUE,NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES,TYPE_FORM,VERSION_VALUE,IS_DEFAULT_VALUE,Boolean.TRUE);
         Assertions.assertThrows(UserDetailsIdNotFoundException.class,() -> mockFormAuditServiceImpl.saveForm(formAuditSchema));
     }
 }

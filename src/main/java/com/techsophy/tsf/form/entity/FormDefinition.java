@@ -27,4 +27,5 @@ public class FormDefinition extends Auditable
     private Map<String,Object> properties;
     private String type;
     private Boolean isDefault;
+    private Boolean pushToElastic;
 }
