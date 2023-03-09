@@ -160,7 +160,6 @@ class TokenUtilsTest
         when(authentication.getPrincipal()).thenReturn(jwt);
         String token= tokenUtils.getLoggedInUserId();
         assertThat(token).isEqualTo(TENANT);
-
     }
 
     @Test
