@@ -1,6 +1,7 @@
 package com.techsophy.tsf.form.entity;
 
 import com.techsophy.tsf.form.dto.AccessControlListDTO;
+import com.techsophy.tsf.form.service.impl.Status;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -27,5 +28,6 @@ public class FormDefinition extends Auditable
     private Map<String,Object> properties;
     private String type;
     private Boolean isDefault;
-    private Boolean pushToElastic;
+    private Status elasticPush = Status.disabled;
+
 }

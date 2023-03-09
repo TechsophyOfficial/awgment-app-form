@@ -13,6 +13,7 @@ import com.techsophy.tsf.form.exception.FormIdNotFoundException;
 import com.techsophy.tsf.form.exception.UserDetailsIdNotFoundException;
 import com.techsophy.tsf.form.repository.FormDefinitionRepository;
 import com.techsophy.tsf.form.service.impl.FormServiceImpl;
+import com.techsophy.tsf.form.service.impl.Status;
 import com.techsophy.tsf.form.utils.UserDetails;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -74,14 +75,20 @@ class FormServiceExceptionTest
     @Test
     void saveFormExceptionTest() throws JsonProcessingException
     {
+        Status elasticPush = Status.disabled;
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
         List<Map<String,Object>> list=new ArrayList<>();
         Map<String,Object> map=new HashMap<>();
         map.put("create","true");
         list.add(map);
         when(mockUserDetails.getUserDetails()).thenReturn(userList);
-        FormSchema formSchemaTest =new FormSchema(ID_VALUE, NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES, TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE,Boolean.TRUE);
-        Assertions.assertThrows(UserDetailsIdNotFoundException.class,() -> mockFormServiceImpl.saveForm(formSchemaTest));
+        FormSchema formSchema =new FormSchema();
+        formSchema.setId(ID_VALUE);
+        formSchema.setName(NAME);
+        formSchema.setComponents(COMPONENTS);
+        formSchema.setAcls(List.of(accessControlListDTO));
+        formSchema.setElasticPush(elasticPush);
+        Assertions.assertThrows(UserDetailsIdNotFoundException.class,() -> mockFormServiceImpl.saveForm(formSchema));
     }
 
     @Test

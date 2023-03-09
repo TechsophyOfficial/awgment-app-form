@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.techsophy.tsf.form.config.CustomFilter;
 import com.techsophy.tsf.form.dto.*;
 import com.techsophy.tsf.form.service.FormService;
+import com.techsophy.tsf.form.service.impl.Status;
 import com.techsophy.tsf.form.utils.TokenUtils;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -45,6 +46,8 @@ import static com.techsophy.tsf.form.constants.FormTestConstants.TOKEN;
 import static com.techsophy.tsf.form.constants.FormTestConstants.TYPE;
 import static com.techsophy.tsf.form.constants.FormTestConstants.VERSION_V1;
 import static com.techsophy.tsf.form.constants.FormModelerConstants.*;
+import static com.techsophy.tsf.form.service.impl.Status.disabled;
+import static com.techsophy.tsf.form.service.impl.Status.enabled;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
@@ -83,11 +86,18 @@ class FormControllerTest
     @Test
     void saveFormComponentTypeTest() throws Exception
     {
+        Status elasticPush = Status.disabled;
         InputStream inputStreamTest=new ClassPathResource(FORM_CONTENT).getInputStream();
         ObjectMapper objectMapperTest=new ObjectMapper();
         FormSchema formSchemaTest=objectMapperTest.readValue(inputStreamTest,FormSchema.class);
+        FormSchema formSchema= new FormSchema();
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
-        FormSchema formSchema = new FormSchema(ID_VALUE,NAME,COMPONENTS,List.of(accessControlListDTO),PROPERTIES,"component", VERSION_VALUE, IS_DEFAULT_VALUE,Boolean.TRUE);
+//        FormSchema formSchema = new FormSchema(ID_VALUE,NAME,COMPONENTS,List.of(accessControlListDTO),PROPERTIES,"component", VERSION_VALUE, IS_DEFAULT_VALUE);
+        formSchema.setId(ID_VALUE);
+        formSchema.setName(NAME);
+        formSchema.setComponents(COMPONENTS);
+        formSchema.setAcls(List.of(accessControlListDTO));
+        formSchema.setElasticPush(elasticPush);
         Mockito.when(mockTokenUtils.getIssuerFromToken(TOKEN)).thenReturn(TENANT);
         Mockito.when(mockFormService.saveForm(formSchemaTest)).thenReturn(new FormResponse(ID_VALUE, VERSION_VALUE));
         RequestBuilder requestBuilderTest = MockMvcRequestBuilders.post(BASE_URL + VERSION_V1 + FORMS_URL)
@@ -101,9 +111,15 @@ class FormControllerTest
     @Test
     void saveFormTest() throws Exception
     {
+        Status push = disabled;
         ObjectMapper objectMapperTest=new ObjectMapper();
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
-        FormSchema formSchema = new FormSchema(ID_VALUE,NAME,COMPONENTS,List.of(accessControlListDTO),PROPERTIES,TYPE_FORM, VERSION_VALUE, IS_DEFAULT_VALUE,Boolean.TRUE);
+        FormSchema formSchema = new FormSchema();
+        formSchema.setId(ID_VALUE);
+        formSchema.setName(NAME);
+        formSchema.setComponents(COMPONENTS);
+        formSchema.setAcls(List.of(accessControlListDTO));
+        formSchema.setElasticPush(push);
         Mockito.when(mockTokenUtils.getIssuerFromToken(TOKEN)).thenReturn(TENANT);
         Mockito.when(mockFormService.saveForm(formSchema)).thenReturn(new FormResponse(ID_VALUE, VERSION_VALUE));
         RequestBuilder requestBuilderTest = MockMvcRequestBuilders.post(BASE_URL + VERSION_V1 + FORMS_URL)
