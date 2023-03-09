@@ -23,5 +23,5 @@ public class FormAuditDefinition extends Auditable
     private Map<String,Object> properties;
     private String type;
     private Boolean isDefault;
-    private Status elasticPush = Status.disabled;
+    private Status elasticPush = Status.DISABLED;
 }

@@ -75,7 +75,7 @@ class FormServiceExceptionTest
     @Test
     void saveFormExceptionTest() throws JsonProcessingException
     {
-        Status elasticPush = Status.disabled;
+        Status elasticPush = Status.DISABLED;
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
         List<Map<String,Object>> list=new ArrayList<>();
         Map<String,Object> map=new HashMap<>();

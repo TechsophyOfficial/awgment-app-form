@@ -76,7 +76,7 @@ class FormAuditServiceExceptionTest
     @Test
     void saveAuditServiceExceptionTest() throws JsonProcessingException
     {
-        Status elasticPush = Status.disabled;
+        Status elasticPush = Status.DISABLED;
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
         when(mockUserDetails.getUserDetails()).thenReturn(userList);
         FormAuditSchema formAuditSchema =new FormAuditSchema();

@@ -85,7 +85,7 @@ class FormsServiceTest
     @Test
     void saveFormTest() throws IOException
     {
-        Status elasticPush = Status.disabled;
+        Status elasticPush = Status.DISABLED;
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
         ObjectMapper objectMapperTest = new ObjectMapper();
         @Cleanup InputStream inputStreamTest = new ClassPathResource(FORMS_DATA_2).getInputStream();
@@ -116,7 +116,7 @@ class FormsServiceTest
     @Test
     void saveFormAndSaveTest() throws IOException
     {
-        Status elasticPush = Status.disabled;
+        Status elasticPush = Status.DISABLED;
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
         ObjectMapper objectMapperTest = new ObjectMapper();
         @Cleanup InputStream inputStreamTest = new ClassPathResource(FORMS_DATA_2).getInputStream();
@@ -149,7 +149,7 @@ class FormsServiceTest
     @Test
     void updateFormTypFormTest() throws IOException
     {
-        Status elasticPush = Status.disabled;
+        Status elasticPush = Status.DISABLED;
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
         ObjectMapper objectMapperTest = new ObjectMapper();
         @Cleanup InputStream inputStreamTest = new ClassPathResource(FORMS_DATA_1).getInputStream();
@@ -182,7 +182,7 @@ class FormsServiceTest
     @Test
     void updateFormTypeComponentTest() throws IOException
     {
-        Status elasticPush = Status.disabled;
+        Status elasticPush = Status.DISABLED;
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
         ObjectMapper objectMapperTest = new ObjectMapper();
         @Cleanup InputStream inputStreamTest = new ClassPathResource(FORMS_DATA_1).getInputStream();
@@ -295,7 +295,7 @@ class FormsServiceTest
 
     @Test
     void deleteFormById(){
-        Status elasticPush = Status.disabled;
+        Status elasticPush = Status.DISABLED;
         Map<String,Object> component = new HashMap<>();
         component.put("key","value");
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
@@ -413,7 +413,7 @@ class FormsServiceTest
     @Test
     void getAllFormsAndFindAllTest() throws IOException
     {
-        Status elasticPush = Status.disabled;
+        Status elasticPush = Status.DISABLED;
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
         ObjectMapper objectMapperTest = new ObjectMapper();
         @Cleanup InputStream inputStreamTest = new ClassPathResource(FORMS_DATA_1).getInputStream();
@@ -434,7 +434,7 @@ class FormsServiceTest
     @Test
     void getAllFormsAndPageableTest1() throws IOException
     {
-        Status elasticPush = Status.disabled;
+        Status elasticPush = Status.DISABLED;
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
         ObjectMapper objectMapperTest = new ObjectMapper();
         @Cleanup InputStream inputStreamTest = new ClassPathResource(FORMS_DATA_1).getInputStream();
@@ -459,7 +459,7 @@ class FormsServiceTest
     @Test
     void getAllFormsFindByTypeAndQPaginationTest() throws IOException
     {
-        Status elasticPush = Status.disabled;
+        Status elasticPush = Status.DISABLED;
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
         ObjectMapper objectMapperTest = new ObjectMapper();
         @Cleanup InputStream inputStreamTest = new ClassPathResource(FORMS_DATA_1).getInputStream();
@@ -484,7 +484,7 @@ class FormsServiceTest
     @Test
     void getAllFormsFindAllTest() throws IOException
     {
-        Status elasticPush = Status.disabled;
+        Status elasticPush = Status.DISABLED;
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
         ObjectMapper objectMapperTest = new ObjectMapper();
         @Cleanup InputStream inputStreamTest = new ClassPathResource(FORMS_DATA_1).getInputStream();
@@ -509,7 +509,7 @@ class FormsServiceTest
     @Test
     void getAllFormsFindByTypePagination() throws IOException
     {
-        Status elasticPush = Status.disabled;
+        Status elasticPush = Status.DISABLED;
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
         ObjectMapper objectMapperTest = new ObjectMapper();
         @Cleanup InputStream inputStreamTest = new ClassPathResource(FORMS_DATA_1).getInputStream();
@@ -534,7 +534,7 @@ class FormsServiceTest
     @Test
     void getAllFormsFindByTypeAndQSortingTest() throws IOException
     {
-        Status elasticPush = Status.disabled;
+        Status elasticPush = Status.DISABLED;
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
         ObjectMapper objectMapperTest = new ObjectMapper();
         @Cleanup InputStream inputStreamTest = new ClassPathResource(FORMS_DATA_1).getInputStream();
@@ -555,7 +555,7 @@ class FormsServiceTest
     @Test
     void getAllFormsAndFindFormsByQSortingTest() throws IOException
     {
-        Status elasticPush = Status.disabled;
+        Status elasticPush = Status.DISABLED;
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
         ObjectMapper objectMapperTest = new ObjectMapper();
         @Cleanup InputStream inputStreamTest = new ClassPathResource(FORMS_DATA_1).getInputStream();

@@ -79,7 +79,7 @@ class FormAuditServiceImplTest
     @Test
     void saveFormTest() throws IOException
     {
-        Status elasticPush = Status.disabled;
+        Status elasticPush = Status.DISABLED;
         List<AccessControlListDTO> list=new ArrayList<>();
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
         list.add(accessControlListDTO);
@@ -104,7 +104,7 @@ class FormAuditServiceImplTest
     @Test
     void getFormByIdTest() throws IOException
     {
-        Status elasticPush = Status.disabled;
+        Status elasticPush = Status.DISABLED;
         List<AccessControlListDTO> list=new ArrayList<>();
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
         list.add(accessControlListDTO);

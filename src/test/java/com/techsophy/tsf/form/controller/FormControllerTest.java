@@ -46,8 +46,6 @@ import static com.techsophy.tsf.form.constants.FormTestConstants.TOKEN;
 import static com.techsophy.tsf.form.constants.FormTestConstants.TYPE;
 import static com.techsophy.tsf.form.constants.FormTestConstants.VERSION_V1;
 import static com.techsophy.tsf.form.constants.FormModelerConstants.*;
-import static com.techsophy.tsf.form.service.impl.Status.disabled;
-import static com.techsophy.tsf.form.service.impl.Status.enabled;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
@@ -86,7 +84,7 @@ class FormControllerTest
     @Test
     void saveFormComponentTypeTest() throws Exception
     {
-        Status elasticPush = Status.disabled;
+        Status elasticPush = Status.DISABLED;
         InputStream inputStreamTest=new ClassPathResource(FORM_CONTENT).getInputStream();
         ObjectMapper objectMapperTest=new ObjectMapper();
         FormSchema formSchemaTest=objectMapperTest.readValue(inputStreamTest,FormSchema.class);
@@ -111,7 +109,7 @@ class FormControllerTest
     @Test
     void saveFormTest() throws Exception
     {
-        Status push = disabled;
+        Status push = Status.DISABLED;
         ObjectMapper objectMapperTest=new ObjectMapper();
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
         FormSchema formSchema = new FormSchema();

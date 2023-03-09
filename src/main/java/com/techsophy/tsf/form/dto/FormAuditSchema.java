@@ -24,5 +24,5 @@ public class FormAuditSchema
     String type;
     Integer version;
     Boolean isDefault;
-    Status elasticPush = Status.disabled;
+    Status elasticPush = Status.DISABLED;
 }
