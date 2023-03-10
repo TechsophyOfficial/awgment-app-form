@@ -13,7 +13,6 @@ import static com.techsophy.tsf.form.constants.FormModelerConstants.*;
 import static com.techsophy.tsf.form.constants.FormModelerConstants.REGEX_CONSTANT;
 
 @Data
-@AllArgsConstructor
 public class FormResponseSchema
 {
     String id;

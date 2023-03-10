@@ -12,10 +12,7 @@ import java.util.List;
 import java.util.Map;
 import static com.techsophy.tsf.form.constants.FormModelerConstants.*;
 
-@With
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class FormAuditResponseSchema
 {
     String id;
