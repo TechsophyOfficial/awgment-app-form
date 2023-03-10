@@ -1,5 +1,6 @@
 package com.techsophy.tsf.form.dto;
 
+import com.techsophy.tsf.form.service.impl.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,4 +33,6 @@ public class FormAuditResponseSchema
     Instant createdOn;
     String updatedById;
     Instant updatedOn;
+    Status elasticPush = Status.DISABLED;
+
 }

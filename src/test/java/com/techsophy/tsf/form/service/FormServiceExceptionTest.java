@@ -94,12 +94,13 @@ class FormServiceExceptionTest
     @Test
     void getFormByIdExceptionTest()
     {
+        Status status= Status.DISABLED;
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
         List<Map<String,Object>> list=new ArrayList<>();
         Map<String,Object> map=new HashMap<>();
         map.put("create","true");
         list.add(map);
-        FormResponseSchema formSchemaTest =new FormResponseSchema(ID_VALUE, NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES, TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE,CREATED_BY_ID_VALUE,CREATED_ON_INSTANT, UPDATED_BY_ID_VALUE, UPDATED_ON_INSTANT);
+        FormResponseSchema formSchemaTest =new FormResponseSchema(ID_VALUE, NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES, TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE,CREATED_BY_ID_VALUE,CREATED_ON_INSTANT, UPDATED_BY_ID_VALUE, UPDATED_ON_INSTANT,status);
         when(this.mockObjectMapper.convertValue(any(),eq(FormResponseSchema.class))).thenReturn(formSchemaTest);
         when(mockFormDefinitionRepository.findById(BigInteger.valueOf(Long.parseLong(ID_VALUE)))).thenReturn(Optional.empty());
         Assertions.assertThrows(FormIdNotFoundException.class,()-> mockFormServiceImpl.getFormById(ID_VALUE));

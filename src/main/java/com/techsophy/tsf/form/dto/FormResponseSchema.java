@@ -1,6 +1,9 @@
 package com.techsophy.tsf.form.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.techsophy.tsf.form.service.impl.Status;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Value;
 import lombok.With;
 import javax.validation.constraints.NotBlank;
@@ -11,8 +14,8 @@ import java.util.Map;
 import static com.techsophy.tsf.form.constants.FormModelerConstants.*;
 import static com.techsophy.tsf.form.constants.FormModelerConstants.REGEX_CONSTANT;
 
-@With
-@Value
+@Data
+@AllArgsConstructor
 public class FormResponseSchema
 {
     String id;
@@ -30,4 +33,6 @@ public class FormResponseSchema
     String updatedById;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_PATTERN, timezone = TIME_ZONE)
     Instant updatedOn;
+    private Status elasticPush = Status.DISABLED;
+
 }
