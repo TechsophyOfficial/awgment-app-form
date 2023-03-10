@@ -9,6 +9,7 @@ import com.techsophy.tsf.form.exception.EntityIdNotFoundException;
 import com.techsophy.tsf.form.exception.FormIdNotFoundException;
 import com.techsophy.tsf.form.repository.FormDefinitionRepository;
 import com.techsophy.tsf.form.service.impl.FormServiceImpl;
+import com.techsophy.tsf.form.service.impl.Status;
 import com.techsophy.tsf.form.utils.TokenUtils;
 import com.techsophy.tsf.form.utils.UserDetails;
 import lombok.Cleanup;
@@ -84,13 +85,24 @@ class FormsServiceTest
     @Test
     void saveFormTest() throws IOException
     {
+        Status elasticPush = Status.DISABLED;
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
         ObjectMapper objectMapperTest = new ObjectMapper();
         @Cleanup InputStream inputStreamTest = new ClassPathResource(FORMS_DATA_2).getInputStream();
         String formData = new String(inputStreamTest.readAllBytes());
         FormDefinition formDefinitionTest = objectMapperTest.readValue(formData,FormDefinition.class);
-        FormSchema formSchemaTest =new FormSchema(ID_VALUE, NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES, TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE);
-        FormAuditSchema formAuditSchema =new FormAuditSchema(ID_VALUE, ID_VALUE,NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES, TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE);
+        FormSchema formSchemaTest =new FormSchema();
+        formSchemaTest.setId(ID_VALUE);
+        formSchemaTest.setName(NAME);
+        formSchemaTest.setComponents(COMPONENTS);
+        formSchemaTest.setAcls(List.of(accessControlListDTO));
+        formSchemaTest.setElasticPush(elasticPush);
+        FormAuditSchema formAuditSchema =new FormAuditSchema();
+        formAuditSchema.setId(ID_VALUE);
+        formAuditSchema.setName(NAME);
+        formAuditSchema.setComponents(COMPONENTS);
+        formAuditSchema.setAcls(List.of(accessControlListDTO));
+        formAuditSchema.setElasticPush(elasticPush);
         when(mockObjectMapper.convertValue(any(), eq(FormAuditSchema.class))).thenReturn(formAuditSchema);
         when(mockIdGenerator.nextId()).thenReturn(BigInteger.valueOf(Long.parseLong(ID_VALUE)));
         Mockito.when(mockUserDetails.getUserDetails()).thenReturn(userList);
@@ -104,13 +116,24 @@ class FormsServiceTest
     @Test
     void saveFormAndSaveTest() throws IOException
     {
+        Status elasticPush = Status.DISABLED;
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
         ObjectMapper objectMapperTest = new ObjectMapper();
         @Cleanup InputStream inputStreamTest = new ClassPathResource(FORMS_DATA_2).getInputStream();
         String formData = new String(inputStreamTest.readAllBytes());
         FormDefinition formDefinitionTest = objectMapperTest.readValue(formData,FormDefinition.class);
-        FormSchema formSchemaTest =new FormSchema(null, NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES,TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE);
-        FormAuditSchema formAuditSchema =new FormAuditSchema(ID_VALUE, ID_VALUE,NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES, TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE);
+        FormSchema formSchemaTest =new FormSchema();
+        formSchemaTest.setId(ID_VALUE);
+        formSchemaTest.setName(NAME);
+        formSchemaTest.setComponents(COMPONENTS);
+        formSchemaTest.setAcls(List.of(accessControlListDTO));
+        formSchemaTest.setElasticPush(elasticPush);
+        FormAuditSchema formAuditSchema =new FormAuditSchema();
+        formAuditSchema.setId(ID_VALUE);
+        formAuditSchema.setName(NAME);
+        formAuditSchema.setComponents(COMPONENTS);
+        formAuditSchema.setAcls(List.of(accessControlListDTO));
+        formAuditSchema.setElasticPush(elasticPush);
         when(mockObjectMapper.convertValue(any(), eq(FormAuditSchema.class))).thenReturn(formAuditSchema);
         when(mockIdGenerator.nextId()).thenReturn(BigInteger.valueOf(Long.parseLong(ID_VALUE)));
         Mockito.when(mockUserDetails.getUserDetails())
@@ -126,13 +149,24 @@ class FormsServiceTest
     @Test
     void updateFormTypFormTest() throws IOException
     {
+        Status elasticPush = Status.DISABLED;
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
         ObjectMapper objectMapperTest = new ObjectMapper();
         @Cleanup InputStream inputStreamTest = new ClassPathResource(FORMS_DATA_1).getInputStream();
         String formData = new String(inputStreamTest.readAllBytes());
         FormDefinition formDefinitionTest = objectMapperTest.readValue(formData,FormDefinition.class);
-        FormSchema formSchemaTest =new FormSchema(ID_VALUE, NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES, TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE);
-        FormAuditSchema formAuditSchema =new FormAuditSchema(ID_VALUE, ID_VALUE,NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES, TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE);
+        FormSchema formSchemaTest =new FormSchema();
+        formSchemaTest.setId(ID_VALUE);
+        formSchemaTest.setName(NAME);
+        formSchemaTest.setComponents(COMPONENTS);
+        formSchemaTest.setAcls(List.of(accessControlListDTO));
+        formSchemaTest.setElasticPush(elasticPush);
+        FormAuditSchema formAuditSchema =new FormAuditSchema();
+        formAuditSchema.setId(ID_VALUE);
+        formAuditSchema.setName(NAME);
+        formAuditSchema.setComponents(COMPONENTS);
+        formAuditSchema.setAcls(List.of(accessControlListDTO));
+        formAuditSchema.setElasticPush(elasticPush);
         when(mockObjectMapper.convertValue(any(), eq(FormAuditSchema.class))).thenReturn(formAuditSchema);
         when(mockIdGenerator.nextId()).thenReturn(BigInteger.valueOf(Long.parseLong(ID_VALUE)));
         Mockito.when(mockUserDetails.getUserDetails())
@@ -148,12 +182,27 @@ class FormsServiceTest
     @Test
     void updateFormTypeComponentTest() throws IOException
     {
+        Status elasticPush = Status.DISABLED;
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
         ObjectMapper objectMapperTest = new ObjectMapper();
         @Cleanup InputStream inputStreamTest = new ClassPathResource(FORMS_DATA_1).getInputStream();
         String formData = new String(inputStreamTest.readAllBytes());
-        FormSchema formSchemaTest =new FormSchema(ID_VALUE, NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES, TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE);
-        FormAuditSchema formAuditSchema =new FormAuditSchema(ID_VALUE, ID_VALUE,NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES, TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE);
+        FormSchema formSchemaTest =new FormSchema();
+        formSchemaTest.setId(ID_VALUE);
+        formSchemaTest.setName(NAME);
+        formSchemaTest.setComponents(COMPONENTS);
+        formSchemaTest.setAcls(List.of(accessControlListDTO));
+        formSchemaTest.setProperties(PROPERTIES);
+        formSchemaTest.setType(TYPE_FORM);
+        formSchemaTest.setVersion(VERSION_VALUE);
+        formSchemaTest.setIsDefault(IS_DEFAULT_VALUE);
+        formSchemaTest.setElasticPush(elasticPush);
+        FormAuditSchema formAuditSchema =new FormAuditSchema();
+        formAuditSchema.setId(ID_VALUE);
+        formAuditSchema.setName(NAME);
+        formAuditSchema.setComponents(COMPONENTS);
+        formAuditSchema.setAcls(List.of(accessControlListDTO));
+        formAuditSchema.setElasticPush(elasticPush);
         when(mockObjectMapper.convertValue(any(), eq(FormAuditSchema.class))).thenReturn(formAuditSchema);
         when(mockIdGenerator.nextId()).thenReturn(BigInteger.valueOf(Long.parseLong(ID_VALUE)));
         FormDefinition formDefinitionTest = objectMapperTest.readValue(formData,FormDefinition.class);
@@ -172,13 +221,27 @@ class FormsServiceTest
     @Test
     void getFormByIdTest() throws IOException
     {
+        Status status= Status.DISABLED;
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
         ObjectMapper objectMapperTest = new ObjectMapper();
         @Cleanup InputStream inputStreamTest = new ClassPathResource(FORMS_DATA_1).getInputStream();
         String formData = new String(inputStreamTest.readAllBytes());
-        FormResponseSchema formSchemaTest =new FormResponseSchema(ID_VALUE, NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES, TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE,CREATED_BY_ID_VALUE,CREATED_ON_INSTANT, UPDATED_BY_ID_VALUE, UPDATED_ON_INSTANT);
+        FormResponseSchema formResponseSchema = new FormResponseSchema();
+        formResponseSchema.setId(ID_VALUE);
+        formResponseSchema.setName(NAME);
+        formResponseSchema.setComponents(COMPONENTS);
+        formResponseSchema.setAcls(List.of(accessControlListDTO));
+        formResponseSchema.setProperties(PROPERTIES);
+        formResponseSchema.setType(TYPE_FORM);
+        formResponseSchema.setVersion(VERSION_VALUE);
+        formResponseSchema.setIsDefault(IS_DEFAULT_VALUE);
+        formResponseSchema.setCreatedById(CREATED_BY_ID_VALUE);
+        formResponseSchema.setCreatedOn(CREATED_ON_INSTANT);
+        formResponseSchema.setUpdatedById(UPDATED_BY_ID_VALUE);
+        formResponseSchema.setUpdatedOn(UPDATED_ON_INSTANT);
+        formResponseSchema.setElasticPush(status);
         FormDefinition formDefinitionTest = objectMapperTest.readValue(formData, FormDefinition.class);
-        when(this.mockObjectMapper.convertValue(any(), eq(FormResponseSchema.class))).thenReturn(formSchemaTest);
+        when(this.mockObjectMapper.convertValue(any(), eq(FormResponseSchema.class))).thenReturn(formResponseSchema);
         when(mockFormDefinitionRepository.findById(BigInteger.valueOf(Long.parseLong(String.valueOf(1))))).thenReturn(Optional.ofNullable(formDefinitionTest));
         mockFormServiceImpl.getFormById(ID_VALUE);
         verify(mockFormDefinitionRepository, times(1)).findById(BigInteger.valueOf(1));
@@ -187,13 +250,27 @@ class FormsServiceTest
     @Test
     void getAllFormsIncludeFormContentAndFormTest() throws IOException
     {
+        Status status= Status.DISABLED;
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
         ObjectMapper objectMapperTest = new ObjectMapper();
         @Cleanup InputStream inputStreamTest = new ClassPathResource(FORMS_DATA_1).getInputStream();
         String formsData = new String(inputStreamTest.readAllBytes());
-        FormResponseSchema formSchemaTest =new FormResponseSchema(ID_VALUE, NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES, TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE,CREATED_BY_ID_VALUE,CREATED_ON_INSTANT, UPDATED_BY_ID_VALUE, UPDATED_ON_INSTANT);
+        FormResponseSchema formResponseSchema = new FormResponseSchema();
+        formResponseSchema.setId(ID_VALUE);
+        formResponseSchema.setName(NAME);
+        formResponseSchema.setComponents(COMPONENTS);
+        formResponseSchema.setAcls(List.of(accessControlListDTO));
+        formResponseSchema.setProperties(PROPERTIES);
+        formResponseSchema.setType(TYPE_FORM);
+        formResponseSchema.setVersion(VERSION_VALUE);
+        formResponseSchema.setIsDefault(IS_DEFAULT_VALUE);
+        formResponseSchema.setCreatedById(CREATED_BY_ID_VALUE);
+        formResponseSchema.setCreatedOn(CREATED_ON_INSTANT);
+        formResponseSchema.setUpdatedById(UPDATED_BY_ID_VALUE);
+        formResponseSchema.setUpdatedOn(UPDATED_ON_INSTANT);
+        formResponseSchema.setElasticPush(status);
         FormDefinition formDefinitionTest = objectMapperTest.readValue(formsData, FormDefinition.class);
-        when(this.mockObjectMapper.convertValue(any(), eq(FormResponseSchema.class))).thenReturn(formSchemaTest);
+        when(this.mockObjectMapper.convertValue(any(), eq(FormResponseSchema.class))).thenReturn(formResponseSchema);
         when(mockFormDefinitionRepository.findByTypeSorting(TYPE_FORM,null )).thenReturn(List.of(formDefinitionTest));
         mockFormServiceImpl.getAllForms(true, TYPE_FORM,null,null,null );
         verify(mockFormDefinitionRepository,times(1)).findByTypeSorting(TYPE_FORM,null );
@@ -202,13 +279,27 @@ class FormsServiceTest
     @Test
     void getAllFormsIncludeFormContentAndComponentTest() throws IOException
     {
+        Status status= Status.DISABLED;
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
         ObjectMapper objectMapperTest = new ObjectMapper();
         @Cleanup InputStream inputStreamTest = new ClassPathResource(FORMS_DATA_1).getInputStream();
         String formsData = new String(inputStreamTest.readAllBytes());
-        FormResponseSchema formSchemaTest =new FormResponseSchema(ID_VALUE, NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES, TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE,CREATED_BY_ID_VALUE,CREATED_ON_INSTANT, UPDATED_BY_ID_VALUE, UPDATED_ON_INSTANT);
+        FormResponseSchema formResponseSchema = new FormResponseSchema();
+        formResponseSchema.setId(ID_VALUE);
+        formResponseSchema.setName(NAME);
+        formResponseSchema.setComponents(COMPONENTS);
+        formResponseSchema.setAcls(List.of(accessControlListDTO));
+        formResponseSchema.setProperties(PROPERTIES);
+        formResponseSchema.setType(TYPE_FORM);
+        formResponseSchema.setVersion(VERSION_VALUE);
+        formResponseSchema.setIsDefault(IS_DEFAULT_VALUE);
+        formResponseSchema.setCreatedById(CREATED_BY_ID_VALUE);
+        formResponseSchema.setCreatedOn(CREATED_ON_INSTANT);
+        formResponseSchema.setUpdatedById(UPDATED_BY_ID_VALUE);
+        formResponseSchema.setUpdatedOn(UPDATED_ON_INSTANT);
+        formResponseSchema.setElasticPush(status);
         FormDefinition formDefinitionTest = objectMapperTest.readValue(formsData, FormDefinition.class);
-        when(this.mockObjectMapper.convertValue(any(), eq(FormResponseSchema.class))).thenReturn(formSchemaTest);
+        when(this.mockObjectMapper.convertValue(any(), eq(FormResponseSchema.class))).thenReturn(formResponseSchema);
         when(mockFormDefinitionRepository.findByTypeSorting(TYPE_COMPONENT,null)).thenReturn(List.of(formDefinitionTest));
         mockFormServiceImpl.getAllForms(true, TYPE_COMPONENT, null,null,null);
         verify(mockFormDefinitionRepository,times(1)).findByTypeSorting(TYPE_COMPONENT, null);
@@ -217,13 +308,27 @@ class FormsServiceTest
     @Test
     void getAllFormsIncludeFormContentAndNoTypeTest() throws IOException
     {
+        Status status= Status.DISABLED;
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
         ObjectMapper objectMapperTest = new ObjectMapper();
         @Cleanup InputStream inputStreamTest = new ClassPathResource(FORMS_DATA_1).getInputStream();
         String formsSchema = new String(inputStreamTest.readAllBytes());
-        FormResponseSchema formSchemaTest =new FormResponseSchema(ID_VALUE, NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES, TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE,CREATED_BY_ID_VALUE,CREATED_ON_INSTANT, UPDATED_BY_ID_VALUE, UPDATED_ON_INSTANT);
+        FormResponseSchema formResponseSchema = new FormResponseSchema();
+        formResponseSchema.setId(ID_VALUE);
+        formResponseSchema.setName(NAME);
+        formResponseSchema.setComponents(COMPONENTS);
+        formResponseSchema.setAcls(List.of(accessControlListDTO));
+        formResponseSchema.setProperties(PROPERTIES);
+        formResponseSchema.setType(TYPE_FORM);
+        formResponseSchema.setVersion(VERSION_VALUE);
+        formResponseSchema.setIsDefault(IS_DEFAULT_VALUE);
+        formResponseSchema.setCreatedById(CREATED_BY_ID_VALUE);
+        formResponseSchema.setCreatedOn(CREATED_ON_INSTANT);
+        formResponseSchema.setUpdatedById(UPDATED_BY_ID_VALUE);
+        formResponseSchema.setUpdatedOn(UPDATED_ON_INSTANT);
+        formResponseSchema.setElasticPush(status);
         FormDefinition formDefinitionTest = objectMapperTest.readValue(formsSchema, FormDefinition.class);
-        when(this.mockObjectMapper.convertValue(any(), eq(FormResponseSchema.class))).thenReturn(formSchemaTest);
+        when(this.mockObjectMapper.convertValue(any(), eq(FormResponseSchema.class))).thenReturn(formResponseSchema);
         when(mockFormDefinitionRepository.findAll((Sort) any())).thenReturn(List.of(formDefinitionTest));
         mockFormServiceImpl.getAllForms(true, null,null ,null,Sort.unsorted()).collect(Collectors.toList());
         verify(mockFormDefinitionRepository,times(1)).findAll((Sort) any());
@@ -232,13 +337,27 @@ class FormsServiceTest
     @Test
     void getAllFormsNoFormContentAndNoTypeTest() throws IOException
     {
+        Status status= Status.DISABLED;
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
         ObjectMapper objectMapperTest = new ObjectMapper();
         @Cleanup InputStream inputStreamTest = new ClassPathResource(FORMS_DATA_1).getInputStream();
         String formData = new String(inputStreamTest.readAllBytes());
-        FormResponseSchema formSchemaTest =new FormResponseSchema(ID_VALUE, NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES, TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE,CREATED_BY_ID_VALUE,CREATED_ON_INSTANT, UPDATED_BY_ID_VALUE, UPDATED_ON_INSTANT);
+        FormResponseSchema formResponseSchema = new FormResponseSchema();
+        formResponseSchema.setId(ID_VALUE);
+        formResponseSchema.setName(NAME);
+        formResponseSchema.setComponents(COMPONENTS);
+        formResponseSchema.setAcls(List.of(accessControlListDTO));
+        formResponseSchema.setProperties(PROPERTIES);
+        formResponseSchema.setType(TYPE_FORM);
+        formResponseSchema.setVersion(VERSION_VALUE);
+        formResponseSchema.setIsDefault(IS_DEFAULT_VALUE);
+        formResponseSchema.setCreatedById(CREATED_BY_ID_VALUE);
+        formResponseSchema.setCreatedOn(CREATED_ON_INSTANT);
+        formResponseSchema.setUpdatedById(UPDATED_BY_ID_VALUE);
+        formResponseSchema.setUpdatedOn(UPDATED_ON_INSTANT);
+        formResponseSchema.setElasticPush(status);
         FormDefinition formDefinitionTest = objectMapperTest.readValue(formData, FormDefinition.class);
-        when(this.mockObjectMapper.convertValue(any(), eq(FormResponseSchema.class))).thenReturn(formSchemaTest);
+        when(this.mockObjectMapper.convertValue(any(), eq(FormResponseSchema.class))).thenReturn(formResponseSchema);
         when(mockFormDefinitionRepository.findAll()).thenReturn(List.of(formDefinitionTest));
         mockFormServiceImpl.getAllForms(false, null,null ,null,null);
         verify(mockFormDefinitionRepository,times(1)).findAll((Sort) any());
@@ -246,15 +365,34 @@ class FormsServiceTest
 
     @Test
     void deleteFormById(){
+        Status elasticPush = Status.DISABLED;
         Map<String,Object> component = new HashMap<>();
         component.put("key","value");
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
-        FormDefinition formDefinition = new FormDefinition(BigInteger.valueOf(Long.parseLong(ID_VALUE)),NAME,VERSION_VALUE,component,List.of(accessControlListDTO),component,"component", IS_DEFAULT_VALUE);
-        FormResponseSchema formSchemaTest =new FormResponseSchema(ID_VALUE, NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES, TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE,CREATED_BY_ID_VALUE,CREATED_ON_INSTANT, UPDATED_BY_ID_VALUE, UPDATED_ON_INSTANT);
+        FormDefinition formDefinition = new FormDefinition();
+        formDefinition.setId(BigInteger.ONE);
+        formDefinition.setName(NAME);
+        formDefinition.setComponents(COMPONENTS);
+        formDefinition.setAcls(List.of(accessControlListDTO));
+        formDefinition.setElasticPush(elasticPush);
+        FormResponseSchema formResponseSchema = new FormResponseSchema();
+        formResponseSchema.setId(ID_VALUE);
+        formResponseSchema.setName(NAME);
+        formResponseSchema.setComponents(COMPONENTS);
+        formResponseSchema.setAcls(List.of(accessControlListDTO));
+        formResponseSchema.setProperties(PROPERTIES);
+        formResponseSchema.setType(TYPE_FORM);
+        formResponseSchema.setVersion(VERSION_VALUE);
+        formResponseSchema.setIsDefault(IS_DEFAULT_VALUE);
+        formResponseSchema.setCreatedById(CREATED_BY_ID_VALUE);
+        formResponseSchema.setCreatedOn(CREATED_ON_INSTANT);
+        formResponseSchema.setUpdatedById(UPDATED_BY_ID_VALUE);
+        formResponseSchema.setUpdatedOn(UPDATED_ON_INSTANT);
+        formResponseSchema.setElasticPush(elasticPush);
         when(mockFormDefinitionRepository.existsById(BigInteger.valueOf(1))).thenReturn(true);
         when(mockFormDefinitionRepository.findById(BigInteger.valueOf(1))).thenReturn(Optional.of(formDefinition));
         when(mockFormDefinitionRepository.deleteById(BigInteger.valueOf(1))).thenReturn(Integer.valueOf(ID_VALUE));
-        when(mockObjectMapper.convertValue(any(),eq(FormResponseSchema.class))).thenReturn(formSchemaTest);
+        when(mockObjectMapper.convertValue(any(),eq(FormResponseSchema.class))).thenReturn(formResponseSchema);
         mockFormServiceImpl.deleteFormById(ID_VALUE);
         verify(mockFormDefinitionRepository, times(1)).deleteById(BigInteger.valueOf(1));
     }
@@ -268,13 +406,27 @@ class FormsServiceTest
     @Test
     void searchFormByIdOrNameLikeTest() throws IOException
     {
+        Status status= Status.DISABLED;
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
         ObjectMapper objectMapperTest=new ObjectMapper();
         @Cleanup InputStream inputStreamTest = new ClassPathResource(FORMS_DATA_1).getInputStream();
         String formData= new String(inputStreamTest.readAllBytes());
-        FormResponseSchema formSchemaTest =new FormResponseSchema(ID_VALUE, NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES, TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE,CREATED_BY_ID_VALUE,CREATED_ON_INSTANT, UPDATED_BY_ID_VALUE, UPDATED_ON_INSTANT);
+        FormResponseSchema formResponseSchema = new FormResponseSchema();
+        formResponseSchema.setId(ID_VALUE);
+        formResponseSchema.setName(NAME);
+        formResponseSchema.setComponents(COMPONENTS);
+        formResponseSchema.setAcls(List.of(accessControlListDTO));
+        formResponseSchema.setProperties(PROPERTIES);
+        formResponseSchema.setType(TYPE_FORM);
+        formResponseSchema.setVersion(VERSION_VALUE);
+        formResponseSchema.setIsDefault(IS_DEFAULT_VALUE);
+        formResponseSchema.setCreatedById(CREATED_BY_ID_VALUE);
+        formResponseSchema.setCreatedOn(CREATED_ON_INSTANT);
+        formResponseSchema.setUpdatedById(UPDATED_BY_ID_VALUE);
+        formResponseSchema.setUpdatedOn(UPDATED_ON_INSTANT);
+        formResponseSchema.setElasticPush(status);
         FormDefinition formDefinitionTest =objectMapperTest.readValue(formData,FormDefinition.class);
-        when(this.mockObjectMapper.convertValue(any(),eq(FormResponseSchema.class))).thenReturn(formSchemaTest);
+        when(this.mockObjectMapper.convertValue(any(),eq(FormResponseSchema.class))).thenReturn(formResponseSchema);
         when(mockFormDefinitionRepository.findByNameOrIdAndType(ID_OR_NAME_LIKE_ABC, TYPE_FORM)).thenReturn(Collections.singletonList(formDefinitionTest));
         mockFormServiceImpl.searchFormByIdOrNameLike(ID_OR_NAME_LIKE_ABC, TYPE_FORM);
         verify(mockFormDefinitionRepository, times(1)).findByNameOrIdAndType(ID_OR_NAME_LIKE_ABC, TYPE_FORM);
@@ -283,13 +435,27 @@ class FormsServiceTest
     @Test
     void searchFormByIdAndType() throws IOException
     {
+        Status status= Status.DISABLED;
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
         ObjectMapper objectMapperTest=new ObjectMapper();
         @Cleanup InputStream inputStreamTest = new ClassPathResource(FORMS_DATA_1).getInputStream();
         String formData= new String(inputStreamTest.readAllBytes());
-        FormResponseSchema formSchemaTest =new FormResponseSchema(ID_VALUE, NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES, TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE,CREATED_BY_ID_VALUE,CREATED_ON_INSTANT, UPDATED_BY_ID_VALUE, UPDATED_ON_INSTANT);
+        FormResponseSchema formResponseSchema = new FormResponseSchema();
+        formResponseSchema.setId(ID_VALUE);
+        formResponseSchema.setName(NAME);
+        formResponseSchema.setComponents(COMPONENTS);
+        formResponseSchema.setAcls(List.of(accessControlListDTO));
+        formResponseSchema.setProperties(PROPERTIES);
+        formResponseSchema.setType(TYPE_FORM);
+        formResponseSchema.setVersion(VERSION_VALUE);
+        formResponseSchema.setIsDefault(IS_DEFAULT_VALUE);
+        formResponseSchema.setCreatedById(CREATED_BY_ID_VALUE);
+        formResponseSchema.setCreatedOn(CREATED_ON_INSTANT);
+        formResponseSchema.setUpdatedById(UPDATED_BY_ID_VALUE);
+        formResponseSchema.setUpdatedOn(UPDATED_ON_INSTANT);
+        formResponseSchema.setElasticPush(status);
         FormDefinition formDefinitionTest =objectMapperTest.readValue(formData,FormDefinition.class);
-        when(mockObjectMapper.convertValue(any(),eq(FormResponseSchema.class))).thenReturn(formSchemaTest);
+        when(mockObjectMapper.convertValue(any(),eq(FormResponseSchema.class))).thenReturn(formResponseSchema);
         when(mockFormDefinitionRepository.findByNameOrIdAndType(ID_OR_NAME_LIKE_ABC, TYPE_FORM)).thenReturn(Collections.singletonList(formDefinitionTest));
         mockFormServiceImpl.searchFormByIdOrNameLike(ID_OR_NAME_LIKE_ABC, TYPE_FORM);
         verify(mockFormDefinitionRepository, times(1)).findByNameOrIdAndType(ID_OR_NAME_LIKE_ABC, TYPE_FORM);
@@ -298,13 +464,27 @@ class FormsServiceTest
     @Test
     void searchFormByIdOrNameLikeTypeNullTest() throws IOException
     {
+        Status status= Status.DISABLED;
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
         ObjectMapper objectMapperTest=new ObjectMapper();
         @Cleanup InputStream inputStreamTest = new ClassPathResource(FORMS_DATA_1).getInputStream();
         String formData= new String(inputStreamTest.readAllBytes());
-        FormResponseSchema formSchemaTest =new FormResponseSchema(ID_VALUE, NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES, TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE,CREATED_BY_ID_VALUE,CREATED_ON_INSTANT, UPDATED_BY_ID_VALUE, UPDATED_ON_INSTANT);
+        FormResponseSchema formResponseSchema = new FormResponseSchema();
+        formResponseSchema.setId(ID_VALUE);
+        formResponseSchema.setName(NAME);
+        formResponseSchema.setComponents(COMPONENTS);
+        formResponseSchema.setAcls(List.of(accessControlListDTO));
+        formResponseSchema.setProperties(PROPERTIES);
+        formResponseSchema.setType(TYPE_FORM);
+        formResponseSchema.setVersion(VERSION_VALUE);
+        formResponseSchema.setIsDefault(IS_DEFAULT_VALUE);
+        formResponseSchema.setCreatedById(CREATED_BY_ID_VALUE);
+        formResponseSchema.setCreatedOn(CREATED_ON_INSTANT);
+        formResponseSchema.setUpdatedById(UPDATED_BY_ID_VALUE);
+        formResponseSchema.setUpdatedOn(UPDATED_ON_INSTANT);
+        formResponseSchema.setElasticPush(status);
         FormDefinition formDefinitionTest =objectMapperTest.readValue(formData,FormDefinition.class);
-        when(this.mockObjectMapper.convertValue(any(),eq(FormResponseSchema.class))).thenReturn(formSchemaTest);
+        when(this.mockObjectMapper.convertValue(any(),eq(FormResponseSchema.class))).thenReturn(formResponseSchema);
         when(mockFormDefinitionRepository.findByNameOrId(ID_OR_NAME_LIKE_ABC)).thenReturn(Collections.singletonList(formDefinitionTest));
         mockFormServiceImpl.searchFormByIdOrNameLike(ID_OR_NAME_LIKE_ABC, null);
         verify(mockFormDefinitionRepository, times(1)).findByNameOrId(ID_OR_NAME_LIKE_ABC);
@@ -313,13 +493,27 @@ class FormsServiceTest
     @Test
     void getAllFormsIncludeDeploymentIdListTest() throws IOException
     {
+        Status status= Status.DISABLED;
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
         ObjectMapper objectMapperTest = new ObjectMapper();
         @Cleanup InputStream inputStreamTest = new ClassPathResource(FORMS_DATA_1).getInputStream();
         String formData = new String(inputStreamTest.readAllBytes());
-        FormResponseSchema formSchemaTest =new FormResponseSchema(ID_VALUE, NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES, TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE,CREATED_BY_ID_VALUE,CREATED_ON_INSTANT, UPDATED_BY_ID_VALUE, UPDATED_ON_INSTANT);
+        FormResponseSchema formResponseSchema = new FormResponseSchema();
+        formResponseSchema.setId(ID_VALUE);
+        formResponseSchema.setName(NAME);
+        formResponseSchema.setComponents(COMPONENTS);
+        formResponseSchema.setAcls(List.of(accessControlListDTO));
+        formResponseSchema.setProperties(PROPERTIES);
+        formResponseSchema.setType(TYPE_FORM);
+        formResponseSchema.setVersion(VERSION_VALUE);
+        formResponseSchema.setIsDefault(IS_DEFAULT_VALUE);
+        formResponseSchema.setCreatedById(CREATED_BY_ID_VALUE);
+        formResponseSchema.setCreatedOn(CREATED_ON_INSTANT);
+        formResponseSchema.setUpdatedById(UPDATED_BY_ID_VALUE);
+        formResponseSchema.setUpdatedOn(UPDATED_ON_INSTANT);
+        formResponseSchema.setElasticPush(status);
         FormDefinition formDefinitionTest = objectMapperTest.readValue(formData, FormDefinition.class);
-        when(this.mockObjectMapper.convertValue(any(), eq(FormResponseSchema.class))).thenReturn(formSchemaTest);
+        when(this.mockObjectMapper.convertValue(any(), eq(FormResponseSchema.class))).thenReturn(formResponseSchema);
         when(mockFormDefinitionRepository.findByIdIn(List.of(ONE))).thenReturn(List.of(formDefinitionTest));
         mockFormServiceImpl.getAllForms(false, null,ONE ,null,null);
         verify(mockFormDefinitionRepository,times(1)).findByIdIn(List.of(ONE));
@@ -328,13 +522,27 @@ class FormsServiceTest
     @Test
     void getAllFormsIncludeContentTest() throws IOException
     {
+        Status status= Status.DISABLED;
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
         ObjectMapper objectMapperTest = new ObjectMapper();
         @Cleanup InputStream inputStreamTest = new ClassPathResource(FORMS_DATA_1).getInputStream();
         String formData = new String(inputStreamTest.readAllBytes());
-        FormResponseSchema formSchemaTest =new FormResponseSchema(ID_VALUE, NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES, TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE,CREATED_BY_ID_VALUE,CREATED_ON_INSTANT, UPDATED_BY_ID_VALUE, UPDATED_ON_INSTANT);
+        FormResponseSchema formResponseSchema = new FormResponseSchema();
+        formResponseSchema.setId(ID_VALUE);
+        formResponseSchema.setName(NAME);
+        formResponseSchema.setComponents(COMPONENTS);
+        formResponseSchema.setAcls(List.of(accessControlListDTO));
+        formResponseSchema.setProperties(PROPERTIES);
+        formResponseSchema.setType(TYPE_FORM);
+        formResponseSchema.setVersion(VERSION_VALUE);
+        formResponseSchema.setIsDefault(IS_DEFAULT_VALUE);
+        formResponseSchema.setCreatedById(CREATED_BY_ID_VALUE);
+        formResponseSchema.setCreatedOn(CREATED_ON_INSTANT);
+        formResponseSchema.setUpdatedById(UPDATED_BY_ID_VALUE);
+        formResponseSchema.setUpdatedOn(UPDATED_ON_INSTANT);
+        formResponseSchema.setElasticPush(status);
         FormDefinition formDefinitionTest = objectMapperTest.readValue(formData, FormDefinition.class);
-        when(this.mockObjectMapper.convertValue(any(), eq(FormResponseSchema.class))).thenReturn(formSchemaTest);
+        when(this.mockObjectMapper.convertValue(any(), eq(FormResponseSchema.class))).thenReturn(formResponseSchema);
         when(mockFormDefinitionRepository.findAll()).thenReturn(List.of(formDefinitionTest));
         mockFormServiceImpl.getAllForms(true, EMPTY_TYPE,EMPTY_DEPLOYMENT_ID_LIST,null,null);
         verify(mockFormDefinitionRepository,times(1)).findAll((Sort) any());
@@ -343,13 +551,27 @@ class FormsServiceTest
     @Test
     void getAllFormsIncludeTypeTest() throws IOException
     {
+        Status status= Status.DISABLED;
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
         ObjectMapper objectMapperTest = new ObjectMapper();
         @Cleanup InputStream inputStreamTest = new ClassPathResource(FORMS_DATA_1).getInputStream();
         String formData = new String(inputStreamTest.readAllBytes());
-        FormResponseSchema formSchemaTest =new FormResponseSchema(ID_VALUE, NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES, TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE,CREATED_BY_ID_VALUE,CREATED_ON_INSTANT, UPDATED_BY_ID_VALUE, UPDATED_ON_INSTANT);
+        FormResponseSchema formResponseSchema = new FormResponseSchema();
+        formResponseSchema.setId(ID_VALUE);
+        formResponseSchema.setName(NAME);
+        formResponseSchema.setComponents(COMPONENTS);
+        formResponseSchema.setAcls(List.of(accessControlListDTO));
+        formResponseSchema.setProperties(PROPERTIES);
+        formResponseSchema.setType(TYPE_FORM);
+        formResponseSchema.setVersion(VERSION_VALUE);
+        formResponseSchema.setIsDefault(IS_DEFAULT_VALUE);
+        formResponseSchema.setCreatedById(CREATED_BY_ID_VALUE);
+        formResponseSchema.setCreatedOn(CREATED_ON_INSTANT);
+        formResponseSchema.setUpdatedById(UPDATED_BY_ID_VALUE);
+        formResponseSchema.setUpdatedOn(UPDATED_ON_INSTANT);
+        formResponseSchema.setElasticPush(status);
         FormDefinition formDefinitionTest = objectMapperTest.readValue(formData, FormDefinition.class);
-        when(this.mockObjectMapper.convertValue(any(), eq(FormResponseSchema.class))).thenReturn(formSchemaTest);
+        when(this.mockObjectMapper.convertValue(any(), eq(FormResponseSchema.class))).thenReturn(formResponseSchema);
         when(mockFormDefinitionRepository.findByTypeSorting(FORM, null)).thenReturn(List.of(formDefinitionTest));
         mockFormServiceImpl.getAllForms(false, FORM,null,null,null);
         verify(mockFormDefinitionRepository,times(1)).findByTypeSorting(FORM,null );
@@ -358,11 +580,17 @@ class FormsServiceTest
     @Test
     void getAllFormsAndFindAllTest() throws IOException
     {
+        Status elasticPush = Status.DISABLED;
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
         ObjectMapper objectMapperTest = new ObjectMapper();
         @Cleanup InputStream inputStreamTest = new ClassPathResource(FORMS_DATA_1).getInputStream();
         String formData = new String(inputStreamTest.readAllBytes());
-        FormSchema formSchemaTest =new FormSchema(ID_VALUE,NAME,COMPONENTS,List.of(accessControlListDTO),PROPERTIES,TYPE_FORM,VERSION_VALUE,IS_DEFAULT_VALUE);
+        FormSchema formSchemaTest =new FormSchema();
+        formSchemaTest.setId(ID_VALUE);
+        formSchemaTest.setName(NAME);
+        formSchemaTest.setComponents(COMPONENTS);
+        formSchemaTest.setAcls(List.of(accessControlListDTO));
+        formSchemaTest.setElasticPush(elasticPush);
         FormDefinition formDefinitionTest = objectMapperTest.readValue(formData, FormDefinition.class);
         when(this.mockObjectMapper.convertValue(any(), eq(FormSchema.class))).thenReturn(formSchemaTest);
         when(mockFormDefinitionRepository.findAll()).thenReturn(List.of(formDefinitionTest));
@@ -373,11 +601,17 @@ class FormsServiceTest
     @Test
     void getAllFormsAndPageableTest1() throws IOException
     {
+        Status elasticPush = Status.DISABLED;
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
         ObjectMapper objectMapperTest = new ObjectMapper();
         @Cleanup InputStream inputStreamTest = new ClassPathResource(FORMS_DATA_1).getInputStream();
         String formsData = new String(inputStreamTest.readAllBytes());
-        FormSchema formSchemaTest =new FormSchema(ID_VALUE,NAME,COMPONENTS,List.of(accessControlListDTO),PROPERTIES,TYPE_FORM,VERSION_VALUE,IS_DEFAULT_VALUE);
+        FormSchema formSchemaTest =new FormSchema();
+        formSchemaTest.setId(ID_VALUE);
+        formSchemaTest.setName(NAME);
+        formSchemaTest.setComponents(COMPONENTS);
+        formSchemaTest.setAcls(List.of(accessControlListDTO));
+        formSchemaTest.setElasticPush(elasticPush);
         FormDefinition formDefinitionTest = objectMapperTest.readValue(formsData, FormDefinition.class);
         when(this.mockObjectMapper.convertValue(any(), eq(FormSchema.class))).thenReturn(formSchemaTest);
         Page<FormDefinition> page =new PageImpl<>(List.of(formDefinitionTest)) ;
@@ -392,11 +626,17 @@ class FormsServiceTest
     @Test
     void getAllFormsFindByTypeAndQPaginationTest() throws IOException
     {
+        Status elasticPush = Status.DISABLED;
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
         ObjectMapper objectMapperTest = new ObjectMapper();
         @Cleanup InputStream inputStreamTest = new ClassPathResource(FORMS_DATA_1).getInputStream();
         String formsData = new String(inputStreamTest.readAllBytes());
-        FormSchema formSchemaTest =new FormSchema(ID_VALUE, NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES,TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE);
+        FormSchema formSchemaTest =new FormSchema();
+        formSchemaTest.setId(ID_VALUE);
+        formSchemaTest.setName(NAME);
+        formSchemaTest.setComponents(COMPONENTS);
+        formSchemaTest.setAcls(List.of(accessControlListDTO));
+        formSchemaTest.setElasticPush(elasticPush);
         FormDefinition formDefinitionTest = objectMapperTest.readValue(formsData, FormDefinition.class);
         when(this.mockObjectMapper.convertValue(any(), eq(FormSchema.class))).thenReturn(formSchemaTest);
         Page<FormDefinition> page =new PageImpl<>(List.of(formDefinitionTest)) ;
@@ -411,11 +651,17 @@ class FormsServiceTest
     @Test
     void getAllFormsFindAllTest() throws IOException
     {
+        Status elasticPush = Status.DISABLED;
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
         ObjectMapper objectMapperTest = new ObjectMapper();
         @Cleanup InputStream inputStreamTest = new ClassPathResource(FORMS_DATA_1).getInputStream();
         String formsData = new String(inputStreamTest.readAllBytes());
-        FormSchema formSchemaTest =new FormSchema(ID_VALUE, NAME,COMPONENTS,List.of(accessControlListDTO),PROPERTIES,TYPE_FORM,VERSION_VALUE,IS_DEFAULT_VALUE);
+        FormSchema formSchemaTest =new FormSchema();
+        formSchemaTest.setId(ID_VALUE);
+        formSchemaTest.setName(NAME);
+        formSchemaTest.setComponents(COMPONENTS);
+        formSchemaTest.setAcls(List.of(accessControlListDTO));
+        formSchemaTest.setElasticPush(elasticPush);
         FormDefinition formDefinitionTest = objectMapperTest.readValue(formsData, FormDefinition.class);
         when(this.mockObjectMapper.convertValue(any(), eq(FormSchema.class))).thenReturn(formSchemaTest);
         Page<FormDefinition> page =new PageImpl<>(List.of(formDefinitionTest)) ;
@@ -430,11 +676,17 @@ class FormsServiceTest
     @Test
     void getAllFormsFindByTypePagination() throws IOException
     {
+        Status elasticPush = Status.DISABLED;
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
         ObjectMapper objectMapperTest = new ObjectMapper();
         @Cleanup InputStream inputStreamTest = new ClassPathResource(FORMS_DATA_1).getInputStream();
         String formsData = new String(inputStreamTest.readAllBytes());
-        FormSchema formSchemaTest =new FormSchema(ID_VALUE, NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES,TYPE_FORM,VERSION_VALUE,IS_DEFAULT_VALUE);
+        FormSchema formSchemaTest =new FormSchema();
+        formSchemaTest.setId(ID_VALUE);
+        formSchemaTest.setName(NAME);
+        formSchemaTest.setComponents(COMPONENTS);
+        formSchemaTest.setAcls(List.of(accessControlListDTO));
+        formSchemaTest.setElasticPush(elasticPush);
         FormDefinition formDefinitionTest = objectMapperTest.readValue(formsData, FormDefinition.class);
         when(this.mockObjectMapper.convertValue(any(), eq(FormSchema.class))).thenReturn(formSchemaTest);
         Page<FormDefinition> page =new PageImpl<>(List.of(formDefinitionTest)) ;
@@ -449,11 +701,17 @@ class FormsServiceTest
     @Test
     void getAllFormsFindByTypeAndQSortingTest() throws IOException
     {
+        Status elasticPush = Status.DISABLED;
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
         ObjectMapper objectMapperTest = new ObjectMapper();
         @Cleanup InputStream inputStreamTest = new ClassPathResource(FORMS_DATA_1).getInputStream();
         String formData = new String(inputStreamTest.readAllBytes());
-        FormSchema formSchemaTest =new FormSchema(ID_VALUE,NAME,COMPONENTS,List.of(accessControlListDTO),PROPERTIES,TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE);
+        FormSchema formSchemaTest =new FormSchema();
+        formSchemaTest.setId(ID_VALUE);
+        formSchemaTest.setName(NAME);
+        formSchemaTest.setComponents(COMPONENTS);
+        formSchemaTest.setAcls(List.of(accessControlListDTO));
+        formSchemaTest.setElasticPush(elasticPush);
         FormDefinition formDefinitionTest = objectMapperTest.readValue(formData, FormDefinition.class);
         when(this.mockObjectMapper.convertValue(any(), eq(FormSchema.class))).thenReturn(formSchemaTest);
         when(mockFormDefinitionRepository.findByTypeAndQSorting(TYPE_VALUE,Q,null)).thenReturn(List.of(formDefinitionTest));
@@ -464,11 +722,17 @@ class FormsServiceTest
     @Test
     void getAllFormsAndFindFormsByQSortingTest() throws IOException
     {
+        Status elasticPush = Status.DISABLED;
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
         ObjectMapper objectMapperTest = new ObjectMapper();
         @Cleanup InputStream inputStreamTest = new ClassPathResource(FORMS_DATA_1).getInputStream();
         String formData = new String(inputStreamTest.readAllBytes());
-        FormSchema formSchemaTest =new FormSchema(ID_VALUE,NAME,COMPONENTS,List.of(accessControlListDTO),PROPERTIES,TYPE_FORM,VERSION_VALUE,IS_DEFAULT_VALUE);
+        FormSchema formSchemaTest =new FormSchema();
+        formSchemaTest.setId(ID_VALUE);
+        formSchemaTest.setName(NAME);
+        formSchemaTest.setComponents(COMPONENTS);
+        formSchemaTest.setAcls(List.of(accessControlListDTO));
+        formSchemaTest.setElasticPush(elasticPush);
         FormDefinition formDefinitionTest = objectMapperTest.readValue(formData, FormDefinition.class);
         when(this.mockObjectMapper.convertValue(any(), eq(FormSchema.class))).thenReturn(formSchemaTest);
         when(mockFormDefinitionRepository.findFormsByQSorting(Q, null)).thenReturn(Stream.of(formDefinitionTest));

@@ -1,19 +1,16 @@
 package com.techsophy.tsf.form.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.With;
+import com.techsophy.tsf.form.service.impl.Status;
+import lombok.*;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import java.util.List;
 import java.util.Map;
 import static com.techsophy.tsf.form.constants.FormModelerConstants.*;
 
-@With
+
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class FormAuditSchema
 {
     String id;
@@ -27,4 +24,5 @@ public class FormAuditSchema
     String type;
     Integer version;
     Boolean isDefault;
+    Status elasticPush = Status.DISABLED;
 }

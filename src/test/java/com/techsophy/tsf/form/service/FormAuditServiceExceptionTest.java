@@ -10,6 +10,7 @@ import com.techsophy.tsf.form.dto.FormAuditSchema;
 import com.techsophy.tsf.form.exception.UserDetailsIdNotFoundException;
 import com.techsophy.tsf.form.repository.FormDefinitionRepository;
 import com.techsophy.tsf.form.service.impl.FormAuditServiceImpl;
+import com.techsophy.tsf.form.service.impl.Status;
 import com.techsophy.tsf.form.utils.UserDetails;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -75,9 +76,15 @@ class FormAuditServiceExceptionTest
     @Test
     void saveAuditServiceExceptionTest() throws JsonProcessingException
     {
+        Status elasticPush = Status.DISABLED;
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
         when(mockUserDetails.getUserDetails()).thenReturn(userList);
-        FormAuditSchema formAuditSchema =new FormAuditSchema(ID_VALUE,FORM_ID_VALUE,NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES,TYPE_FORM,VERSION_VALUE,IS_DEFAULT_VALUE);
+        FormAuditSchema formAuditSchema =new FormAuditSchema();
+        formAuditSchema.setId(ID_VALUE);
+        formAuditSchema.setName(NAME);
+        formAuditSchema.setComponents(COMPONENTS);
+        formAuditSchema.setAcls(List.of(accessControlListDTO));
+        formAuditSchema.setElasticPush(elasticPush);
         Assertions.assertThrows(UserDetailsIdNotFoundException.class,() -> mockFormAuditServiceImpl.saveForm(formAuditSchema));
     }
 }

@@ -132,7 +132,8 @@ public class FormServiceImpl implements FormService
                     if (includeContent) {
                         return formSchema;
                     }
-                    return formSchema.withComponents(null);
+                    formSchema.setComponents(null);
+                    return formSchema;
                 });
     }
 
@@ -191,7 +192,11 @@ public class FormServiceImpl implements FormService
         }
         return formStream.map(this::convertEntityToDTO)
                 .map(formSchema ->
-                        formSchema.withComponents(null));
+                {
+                    formSchema.setComponents(null);
+                    return formSchema;
+                });
+
     }
 
     private FormDefinition setCreatedDetails(String id,FormSchema form, Map<String,Object> loggedInUserDetails)

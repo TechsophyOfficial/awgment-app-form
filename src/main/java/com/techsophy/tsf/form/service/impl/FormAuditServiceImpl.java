@@ -69,7 +69,8 @@ public class FormAuditServiceImpl implements FormAuditService
                     {
                         return caseAuditSchema;
                     }
-                    return caseAuditSchema.withComponents(null);
+                    caseAuditSchema.setComponents(null);
+                    return caseAuditSchema;
                 });
     }
 

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.techsophy.tsf.form.config.CustomFilter;
 import com.techsophy.tsf.form.dto.*;
 import com.techsophy.tsf.form.service.FormService;
+import com.techsophy.tsf.form.service.impl.Status;
 import com.techsophy.tsf.form.utils.TokenUtils;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -83,11 +84,18 @@ class FormControllerTest
     @Test
     void saveFormComponentTypeTest() throws Exception
     {
+        Status elasticPush = Status.DISABLED;
         InputStream inputStreamTest=new ClassPathResource(FORM_CONTENT).getInputStream();
         ObjectMapper objectMapperTest=new ObjectMapper();
         FormSchema formSchemaTest=objectMapperTest.readValue(inputStreamTest,FormSchema.class);
+        FormSchema formSchema= new FormSchema();
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
-        FormSchema formSchema = new FormSchema(ID_VALUE,NAME,COMPONENTS,List.of(accessControlListDTO),PROPERTIES,"component", VERSION_VALUE, IS_DEFAULT_VALUE);
+//        FormSchema formSchema = new FormSchema(ID_VALUE,NAME,COMPONENTS,List.of(accessControlListDTO),PROPERTIES,"component", VERSION_VALUE, IS_DEFAULT_VALUE);
+        formSchema.setId(ID_VALUE);
+        formSchema.setName(NAME);
+        formSchema.setComponents(COMPONENTS);
+        formSchema.setAcls(List.of(accessControlListDTO));
+        formSchema.setElasticPush(elasticPush);
         Mockito.when(mockTokenUtils.getIssuerFromToken(TOKEN)).thenReturn(TENANT);
         Mockito.when(mockFormService.saveForm(formSchemaTest)).thenReturn(new FormResponse(ID_VALUE, VERSION_VALUE));
         RequestBuilder requestBuilderTest = MockMvcRequestBuilders.post(BASE_URL + VERSION_V1 + FORMS_URL)
@@ -101,9 +109,15 @@ class FormControllerTest
     @Test
     void saveFormTest() throws Exception
     {
+        Status push = Status.DISABLED;
         ObjectMapper objectMapperTest=new ObjectMapper();
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
-        FormSchema formSchema = new FormSchema(ID_VALUE,NAME,COMPONENTS,List.of(accessControlListDTO),PROPERTIES,TYPE_FORM, VERSION_VALUE, IS_DEFAULT_VALUE);
+        FormSchema formSchema = new FormSchema();
+        formSchema.setId(ID_VALUE);
+        formSchema.setName(NAME);
+        formSchema.setComponents(COMPONENTS);
+        formSchema.setAcls(List.of(accessControlListDTO));
+        formSchema.setElasticPush(push);
         Mockito.when(mockTokenUtils.getIssuerFromToken(TOKEN)).thenReturn(TENANT);
         Mockito.when(mockFormService.saveForm(formSchema)).thenReturn(new FormResponse(ID_VALUE, VERSION_VALUE));
         RequestBuilder requestBuilderTest = MockMvcRequestBuilders.post(BASE_URL + VERSION_V1 + FORMS_URL)
@@ -117,12 +131,27 @@ class FormControllerTest
     @Test
     void getFormByIdTest() throws Exception
     {
+        Status status= Status.DISABLED;
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
         InputStream inputStreamTest =new ClassPathResource(FORM_CONTENT).getInputStream();
         ObjectMapper objectMapperTest=new ObjectMapper();
         FormResponseSchema formSchemaTest=objectMapperTest.readValue(inputStreamTest,FormResponseSchema.class);
         Mockito.when(mockTokenUtils.getIssuerFromToken(TOKEN)).thenReturn(TENANT);
-        Mockito.when(mockFormService.getFormById(ID_VALUE)).thenReturn(new FormResponseSchema(ID_VALUE, NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES, TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE,CREATED_BY_ID_VALUE,CREATED_ON_INSTANT, UPDATED_BY_ID_VALUE, UPDATED_ON_INSTANT));
+        FormResponseSchema formResponseSchema = new FormResponseSchema();
+        formResponseSchema.setId(ID_VALUE);
+        formResponseSchema.setName(NAME);
+        formResponseSchema.setComponents(COMPONENTS);
+        formResponseSchema.setAcls(List.of(accessControlListDTO));
+        formResponseSchema.setProperties(PROPERTIES);
+        formResponseSchema.setType(TYPE_FORM);
+        formResponseSchema.setVersion(VERSION_VALUE);
+        formResponseSchema.setIsDefault(IS_DEFAULT_VALUE);
+        formResponseSchema.setCreatedById(CREATED_BY_ID_VALUE);
+        formResponseSchema.setCreatedOn(CREATED_ON_INSTANT);
+        formResponseSchema.setUpdatedById(UPDATED_BY_ID_VALUE);
+        formResponseSchema.setUpdatedOn(UPDATED_ON_INSTANT);
+        formResponseSchema.setElasticPush(status);
+        Mockito.when(mockFormService.getFormById(ID_VALUE)).thenReturn(formResponseSchema);
         RequestBuilder requestBuilderTest = MockMvcRequestBuilders.get(BASE_URL + VERSION_V1 + FORM_BY_ID_URL,1)
                 .content(objectMapperTest.writeValueAsString(formSchemaTest))
                 .with(jwtRead)
@@ -134,12 +163,27 @@ class FormControllerTest
     @Test
     void getFormByIdComponentTypeTest() throws Exception
     {
+        Status status= Status.DISABLED;
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
         InputStream inputStreamTest =new ClassPathResource(FORM_CONTENT).getInputStream();
         ObjectMapper objectMapperTest=new ObjectMapper();
         FormResponseSchema formSchemaTest=objectMapperTest.readValue(inputStreamTest,FormResponseSchema.class);
         Mockito.when(mockTokenUtils.getIssuerFromToken(TOKEN)).thenReturn(TENANT);
-        Mockito.when(mockFormService.getFormById(ID_VALUE)).thenReturn(new FormResponseSchema(ID_VALUE, NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES, TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE,CREATED_BY_ID_VALUE,CREATED_ON_INSTANT, UPDATED_BY_ID_VALUE, UPDATED_ON_INSTANT));
+        FormResponseSchema formResponseSchema = new FormResponseSchema();
+        formResponseSchema.setId(ID_VALUE);
+        formResponseSchema.setName(NAME);
+        formResponseSchema.setComponents(COMPONENTS);
+        formResponseSchema.setAcls(List.of(accessControlListDTO));
+        formResponseSchema.setProperties(PROPERTIES);
+        formResponseSchema.setType(TYPE_FORM);
+        formResponseSchema.setVersion(VERSION_VALUE);
+        formResponseSchema.setIsDefault(IS_DEFAULT_VALUE);
+        formResponseSchema.setCreatedById(CREATED_BY_ID_VALUE);
+        formResponseSchema.setCreatedOn(CREATED_ON_INSTANT);
+        formResponseSchema.setUpdatedById(UPDATED_BY_ID_VALUE);
+        formResponseSchema.setUpdatedOn(UPDATED_ON_INSTANT);
+        formResponseSchema.setElasticPush(status);
+        Mockito.when(mockFormService.getFormById(ID_VALUE)).thenReturn(formResponseSchema);
         RequestBuilder requestBuilderTest = MockMvcRequestBuilders.get(BASE_URL + VERSION_V1 + FORM_BY_ID_URL,1)
                 .content(objectMapperTest.writeValueAsString(formSchemaTest))
                 .with(jwtRead)
@@ -154,14 +198,27 @@ class FormControllerTest
     @Test
     void getAllFormsSortingTest() throws Exception
     {
+        Status status= Status.DISABLED;
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
         InputStream inputStreamTest =new ClassPathResource(FORM_CONTENT).getInputStream();
         ObjectMapper objectMapperTest=new ObjectMapper();
         FormResponseSchema formSchemaTest=objectMapperTest.readValue(inputStreamTest,FormResponseSchema.class);
         Mockito.when(mockTokenUtils.getIssuerFromToken(TOKEN)).thenReturn(TENANT);
-        Mockito.when(mockFormService.getAllForms(true, TYPE_FORM,null,null,null )).thenReturn(Stream.of(
-                new FormResponseSchema(ID_VALUE, NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES, TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE,CREATED_BY_ID_VALUE,CREATED_ON_INSTANT, UPDATED_BY_ID_VALUE, UPDATED_ON_INSTANT),
-                new FormResponseSchema(ID_VALUE, NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES, TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE,CREATED_BY_ID_VALUE,CREATED_ON_INSTANT, UPDATED_BY_ID_VALUE, UPDATED_ON_INSTANT)));
+        FormResponseSchema formResponseSchema = new FormResponseSchema();
+        formResponseSchema.setId(ID_VALUE);
+        formResponseSchema.setName(NAME);
+        formResponseSchema.setComponents(COMPONENTS);
+        formResponseSchema.setAcls(List.of(accessControlListDTO));
+        formResponseSchema.setProperties(PROPERTIES);
+        formResponseSchema.setType(TYPE_FORM);
+        formResponseSchema.setVersion(VERSION_VALUE);
+        formResponseSchema.setIsDefault(IS_DEFAULT_VALUE);
+        formResponseSchema.setCreatedById(CREATED_BY_ID_VALUE);
+        formResponseSchema.setCreatedOn(CREATED_ON_INSTANT);
+        formResponseSchema.setUpdatedById(UPDATED_BY_ID_VALUE);
+        formResponseSchema.setUpdatedOn(UPDATED_ON_INSTANT);
+        formResponseSchema.setElasticPush(status);
+        Mockito.when(mockFormService.getAllForms(true, TYPE_FORM,null,null,null )).thenReturn(Stream.of(formResponseSchema));
         RequestBuilder requestBuilderTest = MockMvcRequestBuilders.get(BASE_URL + VERSION_V1 + FORMS_URL).param(INCLUDE_CONTENT, String.valueOf(true)).param(TYPE,FORM).param(DEPLOYMENT_ID_LIST,A)
                 .content(objectMapperTest.writeValueAsString(formSchemaTest))
                 .with(jwtRead)
@@ -173,14 +230,28 @@ class FormControllerTest
     @Test
     void getAllFormsSortingComponentTest() throws Exception
     {
+        Status status= Status.DISABLED;
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
         InputStream inputStreamTest =new ClassPathResource(FORM_CONTENT).getInputStream();
         ObjectMapper objectMapperTest=new ObjectMapper();
         FormResponseSchema formSchemaTest=objectMapperTest.readValue(inputStreamTest,FormResponseSchema.class);
         Mockito.when(mockTokenUtils.getIssuerFromToken(TOKEN)).thenReturn(TENANT);
-        Mockito.when(mockFormService.getAllForms(true, TYPE_FORM,null,null,null )).thenReturn(Stream.of(
+        FormResponseSchema formResponseSchema = new FormResponseSchema();
+        formResponseSchema.setId(ID_VALUE);
+        formResponseSchema.setName(NAME);
+        formResponseSchema.setComponents(COMPONENTS);
+        formResponseSchema.setAcls(List.of(accessControlListDTO));
+        formResponseSchema.setProperties(PROPERTIES);
+        formResponseSchema.setType(TYPE_FORM);
+        formResponseSchema.setVersion(VERSION_VALUE);
+        formResponseSchema.setIsDefault(IS_DEFAULT_VALUE);
+        formResponseSchema.setCreatedById(CREATED_BY_ID_VALUE);
+        formResponseSchema.setCreatedOn(CREATED_ON_INSTANT);
+        formResponseSchema.setUpdatedById(UPDATED_BY_ID_VALUE);
+        formResponseSchema.setUpdatedOn(UPDATED_ON_INSTANT);
+        formResponseSchema.setElasticPush(status);
+        Mockito.when(mockFormService.getAllForms(true, TYPE_FORM,null,null,null )).thenReturn(Stream.of(formResponseSchema));
                 //new FormResponseSchema(ID_VALUE, NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES,TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE, CREATED_BY_ID_VALUE, CREATED_ON_INSTANT,CREATED_BY_NAME, UPDATED_BY_ID_VALUE, UPDATED_ON_INSTANT,UPDATED_BY_NAME),
-                new FormResponseSchema(ID_VALUE, NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES, TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE,CREATED_BY_ID_VALUE,CREATED_ON_INSTANT, UPDATED_BY_ID_VALUE, UPDATED_ON_INSTANT)));
         RequestBuilder requestBuilderTest = MockMvcRequestBuilders.get(BASE_URL + VERSION_V1 + FORMS_URL).param(INCLUDE_CONTENT, String.valueOf(true)).param(TYPE,"component").param(DEPLOYMENT_ID_LIST,A)
                 .content(objectMapperTest.writeValueAsString(formSchemaTest))
                 .with(jwtRead)
@@ -253,13 +324,27 @@ class FormControllerTest
     @Test
     void searchFormByIdOrNameLike() throws Exception
     {
+        Status status= Status.DISABLED;
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
         Mockito.when(mockTokenUtils.getIssuerFromToken(TOKEN)).thenReturn(TENANT);
         InputStream inputStreamTest =new ClassPathResource(FORM_CONTENT).getInputStream();
         ObjectMapper objectMapperTest=new ObjectMapper();
         FormSchema formSchemaTest=objectMapperTest.readValue(inputStreamTest,FormSchema.class);
-        Mockito.when(mockFormService.searchFormByIdOrNameLike(ID_VALUE, TYPE_FORM)).thenReturn(Stream.of(new FormResponseSchema(ID_VALUE, NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES, TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE,CREATED_BY_ID_VALUE,CREATED_ON_INSTANT, UPDATED_BY_ID_VALUE, UPDATED_ON_INSTANT),
-                new FormResponseSchema(ID_VALUE, NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES, TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE,CREATED_BY_ID_VALUE,CREATED_ON_INSTANT, UPDATED_BY_ID_VALUE, UPDATED_ON_INSTANT)));
+        FormResponseSchema formResponseSchema = new FormResponseSchema();
+        formResponseSchema.setId(ID_VALUE);
+        formResponseSchema.setName(NAME);
+        formResponseSchema.setComponents(COMPONENTS);
+        formResponseSchema.setAcls(List.of(accessControlListDTO));
+        formResponseSchema.setProperties(PROPERTIES);
+        formResponseSchema.setType(TYPE_FORM);
+        formResponseSchema.setVersion(VERSION_VALUE);
+        formResponseSchema.setIsDefault(IS_DEFAULT_VALUE);
+        formResponseSchema.setCreatedById(CREATED_BY_ID_VALUE);
+        formResponseSchema.setCreatedOn(CREATED_ON_INSTANT);
+        formResponseSchema.setUpdatedById(UPDATED_BY_ID_VALUE);
+        formResponseSchema.setUpdatedOn(UPDATED_ON_INSTANT);
+        formResponseSchema.setElasticPush(status);
+        Mockito.when(mockFormService.searchFormByIdOrNameLike(ID_VALUE, TYPE_FORM)).thenReturn(Stream.of(formResponseSchema));
         RequestBuilder requestBuilderTest=MockMvcRequestBuilders.get(BASE_URL + VERSION_V1 + SEARCH_FORM_URL).param(ID_OR_NAME_LIKE, String.valueOf(1)).param(TYPE,FORM)
                 .content(objectMapperTest.writeValueAsString(formSchemaTest))
                 .with(jwtRead)
@@ -271,13 +356,27 @@ class FormControllerTest
     @Test
     void searchFormByIdOrNameLikeComponentTypeTest() throws Exception
     {
+        Status status= Status.DISABLED;
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
         Mockito.when(mockTokenUtils.getIssuerFromToken(TOKEN)).thenReturn(TENANT);
         InputStream inputStreamTest =new ClassPathResource(FORM_CONTENT).getInputStream();
         ObjectMapper objectMapperTest=new ObjectMapper();
         FormSchema formSchemaTest=objectMapperTest.readValue(inputStreamTest,FormSchema.class);
-        Mockito.when(mockFormService.searchFormByIdOrNameLike(ID_VALUE, TYPE_FORM)).thenReturn(Stream.of(new FormResponseSchema(ID_VALUE, NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES, TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE,CREATED_BY_ID_VALUE,CREATED_ON_INSTANT, UPDATED_BY_ID_VALUE, UPDATED_ON_INSTANT),
-                new FormResponseSchema(ID_VALUE, NAME, COMPONENTS,List.of(accessControlListDTO),PROPERTIES, TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE,CREATED_BY_ID_VALUE,CREATED_ON_INSTANT, UPDATED_BY_ID_VALUE, UPDATED_ON_INSTANT)));
+        FormResponseSchema formResponseSchema = new FormResponseSchema();
+        formResponseSchema.setId(ID_VALUE);
+        formResponseSchema.setName(NAME);
+        formResponseSchema.setComponents(COMPONENTS);
+        formResponseSchema.setAcls(List.of(accessControlListDTO));
+        formResponseSchema.setProperties(PROPERTIES);
+        formResponseSchema.setType(TYPE_FORM);
+        formResponseSchema.setVersion(VERSION_VALUE);
+        formResponseSchema.setIsDefault(IS_DEFAULT_VALUE);
+        formResponseSchema.setCreatedById(CREATED_BY_ID_VALUE);
+        formResponseSchema.setCreatedOn(CREATED_ON_INSTANT);
+        formResponseSchema.setUpdatedById(UPDATED_BY_ID_VALUE);
+        formResponseSchema.setUpdatedOn(UPDATED_ON_INSTANT);
+        formResponseSchema.setElasticPush(status);
+        Mockito.when(mockFormService.searchFormByIdOrNameLike(ID_VALUE, TYPE_FORM)).thenReturn(Stream.of(formResponseSchema));
         RequestBuilder requestBuilderTest=MockMvcRequestBuilders.get(BASE_URL + VERSION_V1 + SEARCH_FORM_URL).param(ID_OR_NAME_LIKE, String.valueOf(1)).param(TYPE,"component")
                 .content(objectMapperTest.writeValueAsString(formSchemaTest))
                 .with(jwtRead)
