@@ -3,6 +3,7 @@ package com.techsophy.tsf.form.config;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.assertions.Assertions;
+import com.techsophy.tsf.form.utils.TokenUtils;
 import com.techsophy.tsf.form.utils.WebClientWrapper;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
@@ -32,11 +33,13 @@ import static org.mockito.Mockito.when;
 
 @ActiveProfiles(TEST_ACTIVE_PROFILE)
 @SpringBootTest
-public class JWTRoleConverterTest {
+class JWTRoleConverterTest {
     @Mock
     WebClientWrapper webClientWrapper;
     @Mock
     ObjectMapper mockObjectMapper;
+    @Mock
+    TokenUtils tokenUtils;
 
     @InjectMocks
     JWTRoleConverter jwtRoleConverter;
@@ -52,6 +55,7 @@ public class JWTRoleConverterTest {
         Mockito.when(webClientWrapper.webclientRequest(any(WebClient.class),anyString(),anyString(), ArgumentMatchers.eq(null))).thenReturn(response);
         Mockito.when(this.mockObjectMapper.readValue(anyString(),ArgumentMatchers.eq(Map.class))).thenReturn(userInformationMap);
         Mockito.when(this.mockObjectMapper.convertValue(userInformationMap.get(CLIENT_ROLES),List.class)).thenReturn(List.of(response));
+        Mockito.when(tokenUtils.getIssuerFromToken(anyString())).thenReturn("techsophy-platform");
         Collection<GrantedAuthority> response1 = jwtRoleConverter.convert(jwt);
         Assertions.assertNotNull(response1);
     }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.techsophy.tsf.form.config.CustomFilter;
 import com.techsophy.tsf.form.dto.*;
 import com.techsophy.tsf.form.service.FormAuditService;
+import com.techsophy.tsf.form.service.impl.Status;
 import com.techsophy.tsf.form.utils.TokenUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer;
@@ -113,10 +114,24 @@ class FormAuditControllerImplTest
     @Test
     void getFormByIdTest() throws Exception
     {
+        Status status = Status.DISABLED;
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
-        FormAuditResponseSchema formSchemaTest =new FormAuditResponseSchema(ID_VALUE,FORM_ID_VALUE,NAME,COMPONENTS, List.of(accessControlListDTO),PROPERTIES,TYPE_FORM, VERSION_VALUE, IS_DEFAULT_VALUE ,CREATED_BY_ID_VALUE, CREATED_ON_INSTANT,CREATED_BY_NAME, UPDATED_BY_ID_VALUE, UPDATED_ON_INSTANT,UPDATED_BY_NAME);
+        FormAuditResponseSchema formAuditResponseSchema = new FormAuditResponseSchema();
+        formAuditResponseSchema.setId(ID_VALUE);
+        formAuditResponseSchema.setName(NAME);
+        formAuditResponseSchema.setComponents(COMPONENTS);
+        formAuditResponseSchema.setAcls(List.of(accessControlListDTO));
+        formAuditResponseSchema.setProperties(PROPERTIES);
+        formAuditResponseSchema.setType(TYPE_FORM);
+        formAuditResponseSchema.setVersion(VERSION_VALUE);
+        formAuditResponseSchema.setIsDefault(IS_DEFAULT_VALUE);
+        formAuditResponseSchema.setCreatedById(CREATED_BY_ID_VALUE);
+        formAuditResponseSchema.setCreatedOn(CREATED_ON_INSTANT);
+        formAuditResponseSchema.setUpdatedById(UPDATED_BY_ID_VALUE);
+        formAuditResponseSchema.setUpdatedOn(UPDATED_ON_INSTANT);
+        formAuditResponseSchema.setElasticPush(status);
         Mockito.when(mockTokenUtils.getIssuerFromToken(TOKEN)).thenReturn(TENANT);
-        Mockito.when(mockFormService.getFormsById(ID_VALUE,1)).thenReturn(formSchemaTest);
+        Mockito.when(mockFormService.getFormsById(ID_VALUE,1)).thenReturn(formAuditResponseSchema);
         RequestBuilder requestBuilderTest = MockMvcRequestBuilders.get(BASE_URL+VERSION_V1+ HISTORY+FORM_VERSION_BY_ID_URL,1,1)
                 .with(jwtRead)
                 .contentType(MediaType.APPLICATION_JSON);
@@ -127,10 +142,24 @@ class FormAuditControllerImplTest
     @Test
     void getAllFormsSortingTest() throws Exception
     {
+        Status status = Status.DISABLED;
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
-        FormAuditResponseSchema formSchemaTest =new FormAuditResponseSchema(ID_VALUE, FORM_ID_VALUE,NAME,COMPONENTS,List.of(accessControlListDTO),PROPERTIES, TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE,CREATED_BY_ID_VALUE, CREATED_ON_INSTANT,CREATED_BY_NAME, UPDATED_BY_ID_VALUE, UPDATED_ON_INSTANT,UPDATED_BY_NAME);
+        FormAuditResponseSchema formAuditResponseSchema = new FormAuditResponseSchema();
+        formAuditResponseSchema.setId(ID_VALUE);
+        formAuditResponseSchema.setName(NAME);
+        formAuditResponseSchema.setComponents(COMPONENTS);
+        formAuditResponseSchema.setAcls(List.of(accessControlListDTO));
+        formAuditResponseSchema.setProperties(PROPERTIES);
+        formAuditResponseSchema.setType(TYPE_FORM);
+        formAuditResponseSchema.setVersion(VERSION_VALUE);
+        formAuditResponseSchema.setIsDefault(IS_DEFAULT_VALUE);
+        formAuditResponseSchema.setCreatedById(CREATED_BY_ID_VALUE);
+        formAuditResponseSchema.setCreatedOn(CREATED_ON_INSTANT);
+        formAuditResponseSchema.setUpdatedById(UPDATED_BY_ID_VALUE);
+        formAuditResponseSchema.setUpdatedOn(UPDATED_ON_INSTANT);
+        formAuditResponseSchema.setElasticPush(status);
         Mockito.when(mockTokenUtils.getIssuerFromToken(TOKEN)).thenReturn(TENANT);
-        Mockito.when(mockFormService.getAllForms(ID_VALUE,true, (Sort) null)).thenReturn(Stream.of(formSchemaTest));
+        Mockito.when(mockFormService.getAllForms(ID_VALUE,true, (Sort) null)).thenReturn(Stream.of(formAuditResponseSchema));
         RequestBuilder requestBuilderTest = MockMvcRequestBuilders
                 .get(BASE_URL+VERSION_V1+ HISTORY+FORM_BY_ID_URL,1)
                 .param(INCLUDE_CONTENT, String.valueOf(true))

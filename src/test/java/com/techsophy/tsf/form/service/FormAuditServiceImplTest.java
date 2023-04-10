@@ -10,6 +10,7 @@ import com.techsophy.tsf.form.dto.PaginationResponsePayload;
 import com.techsophy.tsf.form.entity.FormAuditDefinition;
 import com.techsophy.tsf.form.repository.FormDefinitionAuditRepository;
 import com.techsophy.tsf.form.service.impl.FormAuditServiceImpl;
+import com.techsophy.tsf.form.service.impl.Status;
 import com.techsophy.tsf.form.utils.TokenUtils;
 import com.techsophy.tsf.form.utils.UserDetails;
 import lombok.Cleanup;
@@ -78,6 +79,7 @@ class FormAuditServiceImplTest
     @Test
     void saveFormTest() throws IOException
     {
+        Status elasticPush = Status.DISABLED;
         List<AccessControlListDTO> list=new ArrayList<>();
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
         list.add(accessControlListDTO);
@@ -86,7 +88,12 @@ class FormAuditServiceImplTest
         @Cleanup InputStream inputStreamTest = new ClassPathResource(FORMS_DATA_2).getInputStream();
         String formData = new String(inputStreamTest.readAllBytes());
         FormAuditDefinition formDefinitionTest = objectMapperTest.readValue(formData,FormAuditDefinition.class);
-        FormAuditSchema formAuditSchema =new FormAuditSchema(ID_VALUE, ID_VALUE,NAME, COMPONENTS,list,PROPERTIES,TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE);
+        FormAuditSchema formAuditSchema =new FormAuditSchema();
+        formAuditSchema.setId(ID_VALUE);
+        formAuditSchema.setName(NAME);
+        formAuditSchema.setComponents(COMPONENTS);
+        formAuditSchema.setAcls(List.of(accessControlListDTO));
+        formAuditSchema.setElasticPush(elasticPush);
         when(this.mockObjectMapper.convertValue(any(), eq(FormAuditDefinition.class))).thenReturn(formDefinitionTest);
         when(formDefinitionAuditRepository.save(any())).thenReturn(formDefinitionTest);
         when(this.mockObjectMapper.convertValue(any(), eq(FormResponse.class))).thenReturn(new FormResponse(ID_VALUE, VERSION_VALUE));
@@ -97,6 +104,7 @@ class FormAuditServiceImplTest
     @Test
     void getFormByIdTest() throws IOException
     {
+        Status elasticPush = Status.DISABLED;
         List<AccessControlListDTO> list=new ArrayList<>();
         AccessControlListDTO accessControlListDTO = new AccessControlListDTO(TYPE,"value",true,true,true,true,true);
         list.add(accessControlListDTO);
@@ -104,7 +112,12 @@ class FormAuditServiceImplTest
         @Cleanup InputStream inputStreamTest = new ClassPathResource(FORMS_DATA_2).getInputStream();
         String formData = new String(inputStreamTest.readAllBytes());
         FormAuditDefinition formDefinitionTest = objectMapperTest.readValue(formData,FormAuditDefinition.class);
-        FormAuditSchema formAuditSchema =new FormAuditSchema(ID_VALUE, ID_VALUE,NAME, COMPONENTS,list,PROPERTIES, TYPE_FORM, VERSION_VALUE,IS_DEFAULT_VALUE);
+        FormAuditSchema formAuditSchema =new FormAuditSchema();
+        formAuditSchema.setId(ID_VALUE);
+        formAuditSchema.setName(NAME);
+        formAuditSchema.setComponents(COMPONENTS);
+        formAuditSchema.setAcls(List.of(accessControlListDTO));
+        formAuditSchema.setElasticPush(elasticPush);
         when(this.mockObjectMapper.convertValue(any(), eq(FormAuditSchema.class))).thenReturn(formAuditSchema);
         when(formDefinitionAuditRepository.findById(BigInteger.valueOf(Long.parseLong(ID_VALUE)),VERSION_VALUE)).thenReturn(Optional.ofNullable(formDefinitionTest));
         mockFormServiceImpl.getFormsById(ID_VALUE,VERSION_VALUE);

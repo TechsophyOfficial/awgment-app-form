@@ -28,6 +28,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -146,6 +147,20 @@ class TokenUtilsTest
         PaginationResponsePayload responsePayload = tokenUtils.getPaginationResponsePayload(page,list);
         assertThat(responsePayload).isNotNull();
     }
+    @Test
+    void getTenantTest()
+    {
+        Authentication authentication = Mockito.mock(Authentication.class);
+        SecurityContext securityContext = Mockito.mock(SecurityContext.class);
+        Mockito.when(securityContext.getAuthentication()).thenReturn(authentication);
+        SecurityContextHolder.setContext(securityContext);
+        Map<String, Object> claims;
+        claims = Map.of("preferred_username",TENANT);
+        Jwt jwt= new Jwt(TOKEN, Instant.now(), Instant.now().plusSeconds(30), Map.of("alg", "none"), claims);
+        when(authentication.getPrincipal()).thenReturn(jwt);
+        String token= tokenUtils.getLoggedInUserId();
+        assertThat(token).isEqualTo(TENANT);
+    }
 
     @Test
     void getSortBy()
@@ -170,4 +185,5 @@ class TokenUtilsTest
         Assertions.assertThrows(InvalidInputException.class, () ->
                 tokenUtils.getPageRequest(null,null,null));
     }
+
 }

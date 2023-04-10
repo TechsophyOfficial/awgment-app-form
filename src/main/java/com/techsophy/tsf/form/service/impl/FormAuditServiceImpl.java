@@ -53,7 +53,6 @@ public class FormAuditServiceImpl implements FormAuditService
         BigInteger loggedInUserId = BigInteger.valueOf(Long.parseLong(loggedInUserDetails.get(ID).toString()));
         FormAuditDefinition formAuditDefinition =this.objectMapper.convertValue(formAuditSchema,FormAuditDefinition.class);
         formAuditDefinition.setCreatedById(loggedInUserId);
-        formAuditDefinition.setCreatedByName(loggedInUserDetails.get(FIRST_NAME)+SPACE+loggedInUserDetails.get(LAST_NAME));
         formAuditDefinition.setCreatedOn(Instant.now());
         FormAuditDefinition formAuditDefinitionResponse = formDefinitionAuditRepository.save(formAuditDefinition);
         return this.objectMapper.convertValue(formAuditDefinitionResponse, FormResponse.class);
@@ -70,7 +69,8 @@ public class FormAuditServiceImpl implements FormAuditService
                     {
                         return caseAuditSchema;
                     }
-                    return caseAuditSchema.withComponents(null);
+                    caseAuditSchema.setComponents(null);
+                    return caseAuditSchema;
                 });
     }
 

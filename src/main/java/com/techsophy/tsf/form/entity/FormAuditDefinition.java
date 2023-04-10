@@ -1,5 +1,6 @@
 package com.techsophy.tsf.form.entity;
 
+import com.techsophy.tsf.form.service.impl.Status;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -9,9 +10,6 @@ import static com.techsophy.tsf.form.constants.FormModelerConstants.TP_FORM_DEFI
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-@With
-@NoArgsConstructor
-@AllArgsConstructor
 @Document(collection = TP_FORM_DEFINITION_AUDIT_COLLECTION)
 public class FormAuditDefinition extends Auditable
 {
@@ -25,4 +23,5 @@ public class FormAuditDefinition extends Auditable
     private Map<String,Object> properties;
     private String type;
     private Boolean isDefault;
+    private Status elasticPush = Status.DISABLED;
 }
