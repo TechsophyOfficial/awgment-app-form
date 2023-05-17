@@ -84,6 +84,7 @@ public class FormServiceImpl implements FormService
                 formDefinition.setProperties(formSchema.getProperties());
                 formDefinition.setType(formSchema.getType());
                 formDefinition.setIsDefault(formSchema.getIsDefault());
+                formDefinition.setElasticPush(formSchema.getElasticPush());
             }
         }
         formDefinition.setUpdatedOn(Instant.now());

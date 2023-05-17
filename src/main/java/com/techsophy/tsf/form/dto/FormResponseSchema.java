@@ -2,7 +2,6 @@ package com.techsophy.tsf.form.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.techsophy.tsf.form.service.impl.Status;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;

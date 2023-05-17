@@ -1,10 +1,7 @@
 package com.techsophy.tsf.form.dto;
 
 import com.techsophy.tsf.form.service.impl.Status;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.With;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import java.time.Instant;
