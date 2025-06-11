@@ -15,6 +15,7 @@ import com.techsophy.tsf.form.service.FormAuditService;
 import com.techsophy.tsf.form.utils.TokenUtils;
 import com.techsophy.tsf.form.utils.UserDetails;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -33,7 +34,7 @@ import static com.techsophy.tsf.form.constants.FormModelerConstants.*;
 import static org.apache.commons.lang3.StringUtils.SPACE;
 
 @Service
-@AllArgsConstructor(onConstructor_ = {@Autowired})
+@RequiredArgsConstructor
 public class FormAuditServiceImpl implements FormAuditService
 {
     private final FormDefinitionAuditRepository formDefinitionAuditRepository;

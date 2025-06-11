@@ -25,6 +25,7 @@ class GlobalMessageSourceTest
     public void setUp()
     {
         MockitoAnnotations.openMocks(this);
+        mockGlobalMessageSource = new GlobalMessageSource(mockMessageSource);
     }
 
     @Test

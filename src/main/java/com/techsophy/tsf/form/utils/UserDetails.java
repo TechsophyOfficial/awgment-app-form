@@ -7,6 +7,7 @@ import com.techsophy.tsf.form.config.GlobalMessageSource;
 import com.techsophy.tsf.form.exception.InvalidInputException;
 import com.techsophy.tsf.form.exception.UserDetailsIdNotFoundException;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ import static com.techsophy.tsf.form.constants.FormModelerConstants.*;
 @RefreshScope
 @Slf4j
 @Service
-@AllArgsConstructor(onConstructor_ = {@Autowired})
+@RequiredArgsConstructor
 public class UserDetails
 {
     private final GlobalMessageSource globalMessageSource;
@@ -30,7 +31,7 @@ public class UserDetails
     private final ObjectMapper objectMapper;
     private final WebClientWrapper webClientWrapper;
     @Value(GATEWAY_URI)
-    String gatewayApi;
+    final String gatewayApi;
 
     public List<Map<String,Object>> getUserDetails() throws JsonProcessingException
     {

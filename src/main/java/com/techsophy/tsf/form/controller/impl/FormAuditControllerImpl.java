@@ -10,13 +10,14 @@ import com.techsophy.tsf.form.model.ApiResponse;
 import com.techsophy.tsf.form.service.FormAuditService;
 import com.techsophy.tsf.form.utils.TokenUtils;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.codehaus.plexus.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import static com.techsophy.tsf.form.constants.FormModelerConstants.*;
 
 @RestController
-@AllArgsConstructor(onConstructor_ = {@Autowired})
+@RequiredArgsConstructor
 public class FormAuditControllerImpl implements FormAuditController
 {
     private final FormAuditService formAuditService;

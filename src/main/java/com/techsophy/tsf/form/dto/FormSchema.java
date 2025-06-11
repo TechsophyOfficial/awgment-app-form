@@ -3,8 +3,8 @@ package com.techsophy.tsf.form.dto;
 import com.techsophy.tsf.form.service.impl.Status;
 import lombok.*;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import java.util.List;
 import java.util.Map;
 import static com.techsophy.tsf.form.constants.FormModelerConstants.NAME_NOT_BLANK;

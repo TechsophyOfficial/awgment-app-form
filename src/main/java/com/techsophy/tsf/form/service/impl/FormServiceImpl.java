@@ -15,6 +15,7 @@ import com.techsophy.tsf.form.service.FormService;
 import com.techsophy.tsf.form.utils.TokenUtils;
 import com.techsophy.tsf.form.utils.UserDetails;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,7 @@ import static org.apache.commons.lang3.StringUtils.SPACE;
 @RefreshScope
 @Slf4j
 @Service
-@AllArgsConstructor(onConstructor_ = {@Autowired})
+@RequiredArgsConstructor
 public class FormServiceImpl implements FormService
 {
     private final FormDefinitionRepository formDefinitionRepository;
